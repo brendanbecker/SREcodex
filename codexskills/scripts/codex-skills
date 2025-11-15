@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+# codex-skills - Skills system for OpenAI Codex
+# Based on the architecture from Jesse Vincent's Superpowers project
+# https://github.com/obra/superpowers (MIT License)
+
+set -euo pipefail
+
+CODEX_DIR_RAW="${DOTCODEX_DIR:-${HOME}/dotcodex}"
+CODEX_DIR="$(cd "${CODEX_DIR_RAW}" 2>/dev/null && pwd || echo "${CODEX_DIR_RAW}")"
+SKILLS_DIR="${CODEX_DIR}/skills"
+
+cmd_list() {
+    echo "# Available Codex Skills"
+    echo ""
+    
+    if [[ ! -d "${SKILLS_DIR}" ]]; then
+        echo "No skills directory found. Create skills at: ${SKILLS_DIR}"
+        return 0
+    fi
+    
+    # Find all SKILL.md files
+    local found_any=false
+    while IFS= read -r -d '' skill_file; do
+        found_any=true
+        local skill_dir=$(dirname "${skill_file}")
+        local skill_name=$(basename "${skill_dir}")
+        
+        # Parse YAML frontmatter
+        local name="" desc="" when_to_use=""
+        local in_frontmatter=false
+        
+        while IFS= read -r line; do
+            if [[ "$line" == "---" ]]; then
+                if $in_frontmatter; then
+                    break
+                else
+                    in_frontmatter=true
+                    continue
+                fi
+            fi
+            
+            if $in_frontmatter; then
+                if [[ "$line" =~ ^name:[[:space:]]*(.+)$ ]]; then
+                    name=$(echo "${BASH_REMATCH[1]}" | sed 's/^["\x27]\|["\x27]$//g')
+                elif [[ "$line" =~ ^description:[[:space:]]*(.+)$ ]]; then
+                    desc=$(echo "${BASH_REMATCH[1]}" | sed 's/^["\x27]\|["\x27]$//g')
+                elif [[ "$line" =~ ^when_to_use:[[:space:]]*(.+)$ ]]; then
+                    when_to_use=$(echo "${BASH_REMATCH[1]}" | sed 's/^["\x27]\|["\x27]$//g')
+                fi
+            fi
+        done < "${skill_file}"
+        
+        echo "## ${name:-${skill_name}}"
+        [[ -n "$desc" ]] && echo "${desc}"
+        [[ -n "$when_to_use" ]] && echo "**When to use:** ${when_to_use}"
+        echo "**Usage:** \`codex-skills use ${skill_name}\`"
+        echo ""
+    done < <(find "${SKILLS_DIR}" -name "SKILL.md" -type f -print0 | sort -z)
+    
+    if ! $found_any; then
+        echo "No skills found. Create your first skill at: ${SKILLS_DIR}/skill-name/SKILL.md"
+    fi
+}
+
+cmd_use() {
+    local skill_name="$1"
+    local skill_file="${SKILLS_DIR}/${skill_name}/SKILL.md"
+    
+    if [[ ! -f "${skill_file}" ]]; then
+        echo "Error: Skill '${skill_name}' not found"
+        echo ""
+        echo "Available skills:"
+        find "${SKILLS_DIR}" -name "SKILL.md" -type f 2>/dev/null | \
+            xargs -I{} dirname {} | xargs -I{} basename {} | sort || echo "  (none)"
+        return 1
+    fi
+    
+    echo "# Using Skill: ${skill_name}"
+    echo ""
+    echo "You are now following the '${skill_name}' skill instructions."
+    echo ""
+    echo "---"
+    echo ""
+    cat "${skill_file}"
+}
+
+# Main command dispatcher
+case "${1:-}" in
+    list)
+        cmd_list
+        ;;
+    use)
+        if [[ $# -lt 2 ]]; then
+            echo "Usage: codex-skills use <skill-name>"
+            exit 1
+        fi
+        cmd_use "$2"
+        ;;
+    *)
+        echo "Usage: codex-skills {list|use} [args]"
+        echo ""
+        echo "Commands:"
+        echo "  list           List all available skills"
+        echo "  use <name>     Load and use a specific skill"
+        exit 1
+        ;;
+esac
