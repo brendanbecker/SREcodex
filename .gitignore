@@ -1,0 +1,4 @@
+# Ignore installer-generated AGENTS backups
+AGENTS.md.backup.*
+
+dotcodex/AGENTS.md.backup.*

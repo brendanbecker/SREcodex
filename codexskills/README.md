@@ -15,6 +15,19 @@ bash scripts/install-skills.sh
 codex-skills list
 ```
 
+### Using the Makefile
+
+The repo also provides a Makefile in `codexskills/` so you can run the common flows without memorizing commands:
+
+```bash
+make deploy           # runs DOTCODEX_DIR=../dotcodex bash scripts/install-skills.sh
+make verify           # runs DOTCODEX_DIR=../dotcodex codex-skills list
+make lint             # shellchecks the scripts
+make clean-runtime    # removes installed skills from ../dotcodex
+```
+
+Run these from inside `codexskills/`. Set `DOTCODEX_DIR=/path/to/runtime` first if you want a different destination.
+
 ## Adding a Skill
 
 ```bash

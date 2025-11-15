@@ -39,6 +39,18 @@ codex-skills list
 # Start Codex, ask: "What day is it?"
 ```
 
+### Using the Makefile
+
+Inside `codexskills/` you can also run:
+
+```bash
+make deploy           # same as DOTCODEX_DIR=../dotcodex bash scripts/install-skills.sh
+make verify           # runs DOTCODEX_DIR=../dotcodex codex-skills list
+make lint             # shellcheck scripts/codex-skills + scripts/install-skills.sh
+```
+
+Set `DOTCODEX_DIR` to an absolute path before invoking `make` if you want a different runtime directory.
+
 ## What We Learned from Jesse's Code
 
 ### Key Insights
