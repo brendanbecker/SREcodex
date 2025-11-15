@@ -38,14 +38,9 @@ Skills contain expert knowledge and best practices. When a skill exists for your
 
 ## Skill Activation Rules
 
-Match these patterns to skills:
-- **Time/date queries** → `time-awareness` skill
-- **"What day is it?"** → `time-awareness` skill  
-- **"How many days until..."** → `time-awareness` skill
-- **References to "today", "tomorrow", "this week"** → `time-awareness` skill
-- **Any temporal calculations** → `time-awareness` skill
-
-When you recognize a pattern, immediately load and use the corresponding skill.
+- Use the descriptions and `when_to_use` triggers shown by `codex-skills list` to decide when to load a skill.
+- As soon as you recognize a matching pattern in the conversation, run `codex-skills use <skill>` and follow the instructions.
+- Example: for any temporal question (“What day is it?”, “How many days until…”, references to “today/tomorrow/this week”), load `time-awareness` immediately.
 
 ## Tool Mapping Reference
 
