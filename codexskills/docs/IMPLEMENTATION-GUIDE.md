@@ -28,7 +28,7 @@ After reading Jesse's blog post and actual code, we refined the implementation t
 
 ### Core System
 1. **scripts/codex-skills** - Single script with `list` and `use` commands
-2. **AGENTS.md** - Bootstrap configuration with tool mappings
+2. **AGENTS-TEMPLATE.md** - Bootstrap configuration with tool mappings (copied to `${DOTCODEX_DIR}/AGENTS.md`)
 3. **skills/time-awareness/SKILL.md** - Example skill with proper format
 
 ### Documentation
@@ -127,7 +127,7 @@ codex-skills use <skill-name>   # Load a specific skill
 - Clear output format
 - Follows Jesse's proven pattern
 
-## The Bootstrap (AGENTS.md)
+## The Bootstrap (AGENTS template)
 
 ### Structure
 
@@ -315,7 +315,7 @@ Before deploying to team:
 - [ ] `codex-skills use time-awareness` loads content
 - [ ] Codex actually uses skill when asking "What day is it?"
 - [ ] Team has reviewed the shell script
-- [ ] Team has reviewed AGENTS.md content
+- [ ] Team has reviewed AGENTS-TEMPLATE.md content
 - [ ] Team has reviewed skill content
 - [ ] Documented how to create new skills
 
@@ -343,8 +343,8 @@ Before deploying to team:
 
 ### Codex doesn't run bootstrap command
 
-**Check:** Is `<EXTREMELY_IMPORTANT>` tag present in AGENTS.md?  
-**Fix:** Ensure exact format from AGENTS.md
+**Check:** Is `<EXTREMELY_IMPORTANT>` tag present in AGENTS-TEMPLATE.md?  
+**Fix:** Ensure exact format from AGENTS-TEMPLATE.md
 
 ### Skills don't activate automatically
 
@@ -371,7 +371,7 @@ What your security team should review:
 2. **File access** - Where can it read/write?
    - Answer: Only reads from `${DOTCODEX_DIR:-../dotcodex}/skills/` (through the `~/.codex/skills/` symlink), no writes
 
-3. **AGENTS.md** - What gets injected?
+3. **AGENTS template** - What gets injected?
    - Answer: Skill listing command and usage instructions
 
 4. **Network** - Does it phone home?

@@ -21,7 +21,8 @@ The installer copies `AGENTS.md` and all `skills/*/SKILL.md` files into `DOTCODE
 
 | Path | Purpose |
 |------|---------|
-| [`codexskills/docs/AGENTS.md`](codexskills/docs/AGENTS.md) | Repository guidelines and review checklist |
+| [`codexskills/AGENTS-TEMPLATE.md`](codexskills/AGENTS-TEMPLATE.md) | Template copied to `dotcodex/AGENTS.md` for Codex to read |
+| [`codexskills/docs/AGENTS-GUIDE.md`](codexskills/docs/AGENTS-GUIDE.md) | Repository guidelines and review checklist |
 | [`codexskills/docs/START-HERE.md`](codexskills/docs/START-HERE.md) | Onboarding playbook (full walkthrough) |
 | [`codexskills/docs/IMPLEMENTATION-GUIDE.md`](codexskills/docs/IMPLEMENTATION-GUIDE.md) | Detailed deployment guide |
 | [`codexskills/README.md`](codexskills/README.md) | Developer-facing README inside the source tree |

@@ -10,7 +10,7 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 DOCS_DIR="${REPO_ROOT}/docs"
 SKILL_SOURCE_DIR="${REPO_ROOT}/skills"
 CODEX_SCRIPT="${SCRIPT_DIR}/codex-skills"
-AGENTS_SOURCE="${REPO_ROOT}/AGENTS.md"
+AGENTS_SOURCE="${REPO_ROOT}/AGENTS-TEMPLATE.md"
 REPO_PARENT="$(cd "${REPO_ROOT}/.." && pwd)"
 
 echo "=== Codex Skills System Installer ==="

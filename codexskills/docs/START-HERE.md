@@ -100,9 +100,9 @@ Before deployment, have team inspect:
 - Only reads `${DOTCODEX_DIR:-../dotcodex}/skills/` (via the `~/.codex/skills/` symlink)
 ```
 
-### 2. AGENTS.md
+### 2. AGENTS template (`codexskills/AGENTS-TEMPLATE.md`)
 **Question:** What gets injected into Codex?  
-**Answer:** Skill discovery command and usage rules
+**Answer:** Skill discovery command and usage rules (this template is copied to `dotcodex/AGENTS.md` during install)
 
 ```markdown
 # Review these sections:
