@@ -2,9 +2,9 @@
 
 Repository for building and distributing Codex Skill bundles. It now follows a tidy layout:
 
-- `docs/` – AGENTS contract, analysis, implementation guide, and onboarding instructions
-- `scripts/` – executable tooling (`codex-skills`, `install-skills.sh`)
-- `skills/` – each skill in its own folder with `SKILL.md`
+- [`docs/`](docs) – AGENTS contract, analysis, implementation guide, and onboarding instructions
+- [`scripts/`](scripts) – executable tooling (`codex-skills`, `install-skills.sh`)
+- [`skills/`](skills) – each skill in its own folder with `SKILL.md`
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ ${EDITOR:-vim} skills/my-skill/SKILL.md
 DOTCODEX_DIR=../dotcodex bash scripts/install-skills.sh
 codex-skills use my-skill
 ```
-Edit docs under `docs/` as needed and rerun the installer (pointing at `../dotcodex`) to update the runtime tree. For a full onboarding walkthrough, read `docs/START-HERE.md`. Licensing details are in `LICENSE.md`.
+Edit docs under [`docs/`](docs) as needed and rerun the installer (pointing at `../dotcodex`) to update the runtime tree. For a full onboarding walkthrough, read [`docs/START-HERE.md`](docs/START-HERE.md). Licensing details are in [`LICENSE.md`](LICENSE.md).
 
 ## Attribution
 
