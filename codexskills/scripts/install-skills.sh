@@ -40,9 +40,17 @@ echo "  ✓ Ensured ${BIN_DIR} exists"
 # 2. Ensure ~/.codex/AGENTS.md and ~/.codex/skills point to DOTCODEX_DIR
 echo "[2/6] Ensuring ~/.codex symlinks point to DOTCODEX_DIR..."
 mkdir -p "${HOME}/.codex"
+
+# Remove existing skills directory/link to ensure clean symlink creation
+rm -rf "${SKILLS_LINK}"
+
 ln -sfn "${CODEX_DIR}/AGENTS.md" "${AGENTS_LINK}"
 ln -sfn "${CODEX_DIR}/skills" "${SKILLS_LINK}"
 echo "  ✓ Linked ${AGENTS_LINK} and ${SKILLS_LINK}"
+
+# Store DOTCODEX_DIR location for codex-skills command
+echo "DOTCODEX_DIR=${CODEX_DIR}" > "${HOME}/.codex/config.env"
+echo "  ✓ Saved config to ~/.codex/config.env"
 
 # 3. Install codex-skills script
 echo "[3/6] Installing codex-skills command..."

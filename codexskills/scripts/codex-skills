@@ -5,7 +5,14 @@
 
 set -euo pipefail
 
-CODEX_DIR_RAW="${DOTCODEX_DIR:-${HOME}/dotcodex}"
+# Load DOTCODEX_DIR from config file created by install-skills.sh
+CODEX_CONFIG="${HOME}/.codex/config.env"
+if [[ -f "${CODEX_CONFIG}" ]]; then
+    source "${CODEX_CONFIG}"
+fi
+
+# Use configured DOTCODEX_DIR, falling back to ~/.codex symlink or default
+CODEX_DIR_RAW="${DOTCODEX_DIR:-${HOME}/.codex}"
 CODEX_DIR="$(cd "${CODEX_DIR_RAW}" 2>/dev/null && pwd || echo "${CODEX_DIR_RAW}")"
 SKILLS_DIR="${CODEX_DIR}/skills"
 
