@@ -75,8 +75,14 @@ skills_found=false
 for skill_md in "${SKILL_SOURCE_DIR}"/*/SKILL.md; do
     skills_found=true
     skill_name=$(basename "$(dirname "${skill_md}")")
+    skill_source_dir="$(dirname "${skill_md}")"
+
+    # Create skill directory
     mkdir -p "${SKILLS_DIR}/${skill_name}"
-    cp "${skill_md}" "${SKILLS_DIR}/${skill_name}/SKILL.md"
+
+    # Copy entire skill directory (including scripts, references, etc.)
+    cp -r "${skill_source_dir}"/* "${SKILLS_DIR}/${skill_name}/"
+
     echo "  ✓ Installed ${skill_name} skill"
 done
 
@@ -98,13 +104,124 @@ else
 fi
 
 echo ""
-echo "=== Installation Complete ===" 
+echo "=== Installation Complete ==="
 echo ""
 echo "Structure:"
 echo "  ${CODEX_DIR}/AGENTS.md"
 echo "  ${CODEX_DIR}/skills/time-awareness/SKILL.md"
 echo "  ${BIN_DIR}/codex-skills"
 echo ""
+
+# Check if any skills with scripts were installed
+has_scripts=false
+for skill_dir in "${SKILLS_DIR}"/*; do
+    if [[ -d "${skill_dir}/scripts" ]]; then
+        has_scripts=true
+        break
+    fi
+done
+
+if $has_scripts; then
+    config_file="${HOME}/.codex/config.toml"
+
+    # Check existing config
+    config_exists=false
+    has_sandbox_section=false
+    has_allowed_paths=false
+    already_configured=false
+
+    if [[ -f "${config_file}" ]]; then
+        config_exists=true
+
+        # Check if [sandbox] section exists
+        if grep -q '^\[sandbox\]' "${config_file}"; then
+            has_sandbox_section=true
+        fi
+
+        # Check if allowed_paths exists
+        if grep -q 'allowed_paths' "${config_file}"; then
+            has_allowed_paths=true
+
+            # Check if skills/*/scripts is already in allowed_paths
+            if grep -A 5 'allowed_paths' "${config_file}" | grep -q 'skills.*scripts'; then
+                already_configured=true
+            fi
+        fi
+    fi
+
+    if $already_configured; then
+        echo "✓ Sandbox configuration detected"
+        echo ""
+        echo "  Your ~/.codex/config.toml already includes skill script paths."
+        echo "  No configuration changes needed."
+        echo ""
+    else
+        echo "⚠️  SANDBOX CONFIGURATION REQUIRED"
+        echo ""
+        echo "Some skills include executable scripts. To allow Claude Code to run them"
+        echo "in read-only sandbox mode:"
+        echo ""
+
+        if ! $config_exists; then
+            # No config file - provide complete config
+            echo "Create ~/.codex/config.toml with:"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            cat <<'EOF'
+[sandbox]
+# Allow execution of scripts from skills directory
+allowed_paths = [
+    "~/.codex/skills/*/scripts",
+    "~/.local/bin",
+    "/usr/bin/python3"
+]
+EOF
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        elif ! $has_sandbox_section; then
+            # Has config but no [sandbox] section - add section
+            echo "Add this section to ~/.codex/config.toml:"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            cat <<'EOF'
+[sandbox]
+# Allow execution of scripts from skills directory
+allowed_paths = [
+    "~/.codex/skills/*/scripts",
+    "~/.local/bin",
+    "/usr/bin/python3"
+]
+EOF
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        elif ! $has_allowed_paths; then
+            # Has [sandbox] but no allowed_paths - add to existing section
+            echo "Add to the existing [sandbox] section in ~/.codex/config.toml:"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            cat <<'EOF'
+allowed_paths = [
+    "~/.codex/skills/*/scripts",
+    "~/.local/bin",
+    "/usr/bin/python3"
+]
+EOF
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        else
+            # Has [sandbox] and allowed_paths but missing skill scripts path
+            echo "Add to the allowed_paths array in ~/.codex/config.toml:"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            cat <<'EOF'
+    "~/.codex/skills/*/scripts",
+EOF
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        fi
+
+        echo ""
+        echo "After updating config.toml, restart Claude Code."
+        echo ""
+    fi
+fi
+
 echo "Next steps:"
 echo "  1. Ensure DOTCODEX_DIR points at your shared dotcodex repo (default: ${DEFAULT_DOTCODEX_DIR})"
 echo "  2. ~/.codex already links to DOTCODEX files (AGENTS.md + skills)"
