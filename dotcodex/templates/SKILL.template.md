@@ -7,6 +7,7 @@ languages: all
 # Optional fields:
 # risk_level: low | medium | high
 # requires_confirmation: false
+# script_first: false  # Set to true for bulk/iterative operations (see SCRIPT-FIRST-DIRECTIVE.md)
 ---
 
 # [SKILL_NAME]
@@ -23,6 +24,45 @@ languages: all
 **Don't use when:**
 - [Exclusion case 1]
 - [Exclusion case 2]
+
+<!-- Include this section if script_first: true in frontmatter -->
+<!-- ## Script-First Directive
+
+**SCRIPT-FIRST EXECUTION REQUIRED**
+
+Do not execute this task row-by-row or chat turn-by-turn. Instead:
+
+1. Write a Python/Bash script that:
+   - Iterates through all inputs
+   - Applies the required logic
+   - Handles errors gracefully
+   - Prints a final summary
+
+2. Execute the script once
+
+3. Return only the summary to the conversation
+
+### Script Template
+
+```python
+#!/usr/bin/env python3
+results = []
+for item in items:
+    result = process(item)
+    results.append(result)
+
+successes = sum(1 for r in results if r.success)
+print(f"Processed {len(results)} items: {successes} succeeded")
+```
+
+### Expected Output Format
+
+```
+Processed: N items
+Succeeded: X
+Failed: Y
+```
+-->
 
 ## Examples
 

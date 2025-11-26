@@ -1,0 +1,18 @@
+# SREcodex Codex Configuration
+# This configuration enables script-first programmatic orchestration
+# for complex, high-volume, and multi-skill operations.
+
+[execution_environment]
+# Allow agent to write and execute scripts in workspace
+# Required for Script-First pattern (FEAT-004)
+sandbox_mode = "workspace-write"
+
+[scripts]
+# Script execution settings for programmatic orchestration
+allowed_extensions = [".py", ".sh", ".js"]
+execution_timeout = 300  # 5 minutes max for script execution
+cleanup_after_run = true  # Remove temp scripts after execution
+
+[sandbox]
+# Allow execution of skill scripts
+allowed_paths = ["~/.codex/skills/*/scripts"]

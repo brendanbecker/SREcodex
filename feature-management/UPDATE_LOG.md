@@ -60,3 +60,27 @@
 - Fixed `((count++))` bug in bash with `set -e` (exit on 0 return)
 - Search returns top 3 matches with intent summaries
 - End-to-end tested: search finds skills, use command loads them
+
+## 2025-11-26: FEAT-004 Completed
+
+- **FEAT-004: Script-First Programmatic Orchestration** resolved
+- Created `dotcodex/config.toml` with `sandbox_mode = "workspace-write"`
+- Created `dotcodex/docs/SCRIPT-FIRST-DIRECTIVE.md` with standard directive text
+- Created `dotcodex/docs/SCRIPT-FIRST-SKILLS.md` checklist:
+  - Applied: document-parser (multi-document processing)
+  - Planned: k8s/bulk-restart, logs/cloudwatch-search, monitoring/alert-triage
+- Created `dotcodex/skills/core/orchestrator/SKILL.md`:
+  - FEAT-001 compliant (YAML frontmatter with tags/intent)
+  - Script-first directive included
+  - 3 composition examples (deploy+verify+rollback, crashloop restart, health+jira)
+  - Templates for sequential, conditional, parallel, and error aggregation patterns
+- Updated `dotcodex/templates/SKILL.template.md`:
+  - Added `script_first: false` optional field
+  - Added commented Script-First Directive section template
+- Created `dotcodex/docs/PROGRAMMATIC-ORCHESTRATION.md`:
+  - Documents the "Script-First" pattern
+  - ASCII diagrams comparing chat-based vs script-first approaches
+  - Orchestration patterns with code examples
+  - Testing criteria for script-first validation
+- Updated `dotcodex/skills/INDEX.md` with Workflow Orchestrator skill
+- End-to-end tests documented (require runtime environment for execution)

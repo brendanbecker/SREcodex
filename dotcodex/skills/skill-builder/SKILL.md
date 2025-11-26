@@ -1,8 +1,8 @@
 ---
-name: Skill Builder
-description: Guide for creating new skills following best practices. Creates properly formatted SKILL.md files with YAML frontmatter, clear structure, and effective discovery metadata.
-when_to_use: When user asks to create a new skill, document a technique, capture a workflow, or add instructions for future sessions. When you discover a pattern worth reusing.
-version: 1.0.0
+name: "Skill Builder"
+tags: ["skill", "create", "template", "workflow", "pattern", "reusable", "document", "technique", "instructions", "metadata"]
+intent: "Guide for creating new skills following best practices. Use when user asks to create a new skill, document a technique, capture a workflow, or add instructions for future sessions. Triggers when you discover a pattern worth reusing, when user says 'make a skill', 'write this down', or wants to standardize a recurring process."
+version: "1.0.0"
 languages: all
 ---
 

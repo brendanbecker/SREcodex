@@ -1,8 +1,8 @@
 ---
-name: Time Awareness
-description: Provides current date/time information for temporal queries and calculations
-when_to_use: When user asks about dates, times, schedules, "today", "tomorrow", "this week", deadlines, or anything requiring knowledge of current time. When you see relative time references or temporal calculations needed.
-version: 1.0.0
+name: "Time Awareness"
+tags: ["date", "time", "today", "tomorrow", "schedule", "deadline", "calendar", "timezone", "week", "current", "now"]
+intent: "Provides current date/time information for temporal queries and calculations. Use when user asks about dates, times, schedules, 'today', 'tomorrow', 'this week', deadlines, or anything requiring knowledge of current time. Triggers on relative time references, temporal calculations, scheduling questions, or any task where knowing the current date/time is required."
+version: "1.0.0"
 languages: all
 ---
 
@@ -119,38 +119,19 @@ When times matter, always note the timezone.
 ### ❌ Don't use vague phrases
 Instead of "recently" or "a few weeks ago", get specific dates.
 
-## Real-World Examples
+## Examples
 
-**Example 1: Simple date query**
-```
 User: "What day is today?"
-You: [Run: date '+%Y-%m-%d %A']
-Output: 2024-11-15 Friday
-You: "Today is Friday, November 15, 2024"
-```
+Agent: Run `date '+%Y-%m-%d %A'` to get the current date. Response: "Today is Friday, November 15, 2024."
 
-**Example 2: Relative date calculation**
-```
 User: "What's next Wednesday's date?"
-You: [Run: date -d "next wednesday" '+%Y-%m-%d %A']
-Output: 2024-11-20 Wednesday
-You: "Next Wednesday is November 20, 2024"
-```
+Agent: Run `date -d "next wednesday" '+%Y-%m-%d %A'` to calculate. Response: "Next Wednesday is November 20, 2024."
 
-**Example 3: Days until deadline**
-```
 User: "How many days until Christmas?"
-You: [Run commands to calculate]
-You: "There are 40 days until Christmas (December 25, 2024)"
-```
+Agent: Calculate using `echo $(( ($(date -d "2025-12-25" +%s) - $(date +%s)) / 86400 ))`. Response: "There are 40 days until Christmas (December 25, 2024)."
 
-**Example 4: Time-aware recommendation**
-```
 User: "Should I work on this today?"
-You: [Run: date '+%A']
-Output: Saturday
-You: "Today is Saturday. If this isn't urgent, you might want to wait until Monday to ensure your team can review and collaborate."
-```
+Agent: Run `date '+%A'` to check the day. If Saturday/Sunday, suggest: "Today is Saturday. If this isn't urgent, you might want to wait until Monday to ensure your team can review and collaborate."
 
 ## Additional Capabilities
 

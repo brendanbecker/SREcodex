@@ -1,8 +1,8 @@
 ---
-name: Document Parser
-description: Parse large documents that exceed context limits into structured sections with abstracts, metadata, and hierarchies. This skill should be used when encountering documents over the context limit (typically 25k+ tokens) or when a user explicitly requests document parsing. Apply layout-aware hierarchical chunking principles to preserve semantic structure.
-when_to_use: When encountering documents over 25k tokens, when user mentions "parse document", "too large to read", "context limit exceeded", when analyzing research papers or technical documentation, when extracting structure from markdown files, when building RAG systems that need chunked content, when user requests "extract metadata" or "build document hierarchy"
-version: 1.0.0
+name: "Document Parser"
+tags: ["document", "parse", "chunk", "RAG", "large", "token", "structure", "metadata", "markdown", "hierarchy", "context-limit"]
+intent: "Parse large documents that exceed context limits into structured sections with abstracts, metadata, and hierarchies. Use when encountering documents over 25k tokens, when user mentions 'parse document', 'too large to read', 'context limit exceeded', when analyzing research papers or technical documentation, when extracting structure from markdown files, when building RAG systems that need chunked content, or when user requests 'extract metadata' or 'build document hierarchy'."
+version: "1.0.0"
 languages: all
 ---
 
