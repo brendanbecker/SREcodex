@@ -37,20 +37,11 @@ make index    # Index skills to ChromaDB
 make test     # Verify semantic search works
 ```
 
-### Configure Codex
-
-Add to `~/.codex/config.toml`:
-
-```toml
-[mcp]
-servers = [
-    { name = "srecodex-skills", command = "uv", args = ["run", "--directory", "/path/to/mcp-server", "python", "mcp_server.py"] }
-]
-```
+**Next step**: [Configure Codex to use this server →](SETUP.md)
 
 ### Use in Codex
 
-The `search_skills` tool is now available:
+Once configured, the `search_skills` tool is available:
 
 ```
 search_skills(query="help me debug kubernetes pod crashes")
@@ -72,6 +63,7 @@ search_skills(query="help me debug kubernetes pod crashes")
 
 | File | Purpose |
 |------|---------|
+| `SETUP.md` | **Codex integration guide** |
 | `Makefile` | Development commands (setup, index, test, etc.) |
 | `index_skills.py` | Ingestion pipeline - parses skills and stores in ChromaDB |
 | `mcp_server.py` | MCP server - exposes `search_skills()` tool |
