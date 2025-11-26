@@ -155,3 +155,7 @@ This opens a web UI where you can call `search_skills()` directly.
 ```
 
 The server embeds only the skill's `intent` field but returns the **full SKILL.md content**, avoiding the RAG chunking problem where partial code breaks functionality.
+
+## Running as a Background Service
+
+For always-on operation without a terminal, see [SYSTEMD.md](SYSTEMD.md) to set up the MCP server as a systemd user service.

@@ -64,6 +64,7 @@ search_skills(query="help me debug kubernetes pod crashes")
 | File | Purpose |
 |------|---------|
 | `SETUP.md` | **Codex integration guide** |
+| `SYSTEMD.md` | Run as background service |
 | `Makefile` | Development commands (setup, index, test, etc.) |
 | `index_skills.py` | Ingestion pipeline - parses skills and stores in ChromaDB |
 | `mcp_server.py` | MCP server - exposes `search_skills()` tool |
