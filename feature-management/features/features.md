@@ -7,6 +7,8 @@
 | FEAT-003 | MCP & Vector Search Backend | P2 | resolved | mcp-server |
 | FEAT-004 | Script-First Programmatic Orchestration | P2 | resolved | dotcodex/config |
 | FEAT-005 | OVERPROMPT Workflow Implementation | P1 | resolved | feature-management |
+| FEAT-006 | Pre-commit Hook for SKILL.md Validation | P3 | speculative | dotcodex/skills |
+| FEAT-007 | Skill Audit Script | P3 | speculative | dotcodex/scripts |
 
 ## Dependency Graph
 

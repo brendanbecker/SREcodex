@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-006",
+  "title": "Pre-commit Hook for SKILL.md Validation",
+  "component": "dotcodex/skills",
+  "priority": "P3",
+  "status": "speculative",
+  "type": "enhancement",
+  "created_date": "2025-11-26",
+  "updated_date": "2025-11-26",
+  "assigned_to": null,
+  "tags": ["git-hooks", "validation", "quality", "automation", "pre-commit"],
+  "estimated_effort": "small",
+  "dependencies": ["FEAT-001"],
+  "description": "Add a pre-commit hook that validates SKILL.md files before commit. Ensures required YAML frontmatter fields (name, tags, intent) are present, preventing broken skills from entering the repo. Without validation, the MCP indexer silently skips malformed skills.",
+  "business_value": "medium",
+  "technical_complexity": "low",
+  "user_impact": "Prevents silent indexing failures by catching missing frontmatter at commit time"
+}

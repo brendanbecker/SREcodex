@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-007",
+  "title": "Skill Audit Script",
+  "component": "dotcodex/scripts",
+  "priority": "P3",
+  "status": "speculative",
+  "type": "enhancement",
+  "created_date": "2025-11-26",
+  "updated_date": "2025-11-26",
+  "assigned_to": null,
+  "tags": ["audit", "quality", "reporting", "maintenance", "scripts"],
+  "estimated_effort": "small",
+  "dependencies": ["FEAT-001"],
+  "description": "Create a skill audit script that produces a comprehensive report of all skills, identifying missing fields, stale versions, short intents, and script_first skills missing directive text. Enables bulk review as the skill library grows.",
+  "business_value": "medium",
+  "technical_complexity": "low",
+  "user_impact": "Surfaces skill quality issues in one pass, reducing manual review overhead"
+}
