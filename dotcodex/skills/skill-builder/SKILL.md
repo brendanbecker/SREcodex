@@ -1,27 +1,30 @@
 ---
 name: Skill Builder
-description: Guide for creating new skills following best practices. Creates properly formatted SKILL.md files with YAML frontmatter, clear structure, and effective discovery metadata.
-when_to_use: When user asks to create a new skill, document a technique, capture a workflow, or add instructions for future sessions. When you discover a pattern worth reusing.
-version: 1.0.0
+tags: ["skill", "create", "template", "workflow", "pattern", "reusable", "document", "technique", "instructions", "metadata"]
+intent: "Guide for creating new skills following best practices. Use when user asks to 'create a skill', 'make a skill', 'document a technique', 'capture a workflow', or 'add instructions for future sessions'. Also triggers when you discover a reusable pattern worth standardizing, when user says 'write this down for next time', or when a process keeps recurring and should be formalized."
+version: "1.0.0"
 languages: all
 ---
 
 # Skill Builder
 
-## Overview
+## Usage
 
 This skill teaches you how to create new skills properly. Skills are reusable instruction sets that extend your capabilities with specialized knowledge, workflows, and best practices.
 
 **Core principle:** Write skills that future instances of Codex can discover and apply without human intervention.
 
-## When to Use This Skill
-
-Use this skill when:
+**Use this skill when:**
 - User asks to "create a skill" or "make a skill"
 - You discover a technique that should be reusable
 - User wants to document a workflow or pattern
 - You're asked to "write this down for next time"
 - A process keeps recurring and should be standardized
+
+**Don't use when:**
+- Creating one-off solutions specific to a single project
+- Documenting project-specific code (use project docs instead)
+- The technique is already well-documented elsewhere
 
 ## What Makes a Good Skill
 
@@ -37,53 +40,53 @@ Use this skill when:
 - ❌ Things already well-documented elsewhere
 - ❌ Personal preferences without broad applicability
 
+## Examples
+
+User: "Can you write down how we debugged that async issue so we don't forget next time?"
+Agent: Create a new skill at `dotcodex/skills/async-debugging/SKILL.md` with YAML frontmatter containing name, tags, and intent. Include step-by-step debugging process and examples of common async issues.
+
+User: "I keep doing this same git workflow. Can you make it a skill?"
+Agent: Ask clarifying questions about trigger phrases and edge cases, then create a skill with rich `tags` for discovery and concrete examples in the `## Examples` section.
+
+User: "Create a skill for handling environment variables"
+Agent: Create `dotcodex/skills/env-var-handling/SKILL.md` with tags like ["env", "environment", "config", "secrets", ".env"], detailed intent covering when to use it, and Q&A examples demonstrating proper usage.
+
 ## SKILL.md Structure
 
 Every skill must have this structure:
 
 ```markdown
 ---
-name: Human-Readable Skill Name
-description: One-line summary of what this does
-when_to_use: Detailed triggers, symptoms, and situations when this applies
-version: 1.0.0
-languages: all | [python, javascript] | specific language
+name: "Human-Readable Skill Name"
+tags: ["keyword1", "keyword2", "keyword3"]
+intent: "Comprehensive description of when to use this skill. Include trigger phrases, user requests, symptoms, and specific use cases."
+version: "1.0.0"
+languages: all
 ---
 
 # Skill Name
 
-## Overview
+## Usage
 2-3 sentence explanation of what this skill does and the core principle.
-
-## When to Use
-Bullet list of:
-- Specific triggers (error messages, situations)
-- Symptoms that indicate you need this
-- Types of tasks where this applies
-- When NOT to use this
-
-## Core Pattern (if showing before/after)
-Brief example showing the wrong way and the right way.
-
-## Quick Reference
-Table or bullet list of common operations/commands for quick scanning.
-
-## Implementation
-Step-by-step instructions:
-1. First step
-2. Second step
-3. Third step
-
-Include code examples inline when relevant.
-
-## Common Mistakes
-What goes wrong + how to fix it:
-- ❌ Don't do this
-- ✅ Do this instead
+- When to use (bullet list)
+- When NOT to use
 
 ## Examples
-Real-world concrete examples of using this skill.
+User: "[Common request phrasing]"
+Agent: [Exact action or response]
+
+User: "[Edge case or variation]"
+Agent: [Appropriate response]
+
+## Implementation
+Step-by-step instructions with code examples.
+
+## Common Mistakes (optional)
+- ❌ Problem description
+- ✅ How to fix it
 ```
+
+See `dotcodex/docs/SKILL-SCHEMA.md` for the complete schema specification.
 
 ## The Critical YAML Frontmatter
 
@@ -92,36 +95,42 @@ The YAML section at the top is **critical for discovery**. Codex finds skills by
 ### Required Fields
 
 **`name:`** - Human-readable title
-- Use active voice: "Creating Skills" not "Skill Creation"
-- Descriptive: "Time Awareness" not just "Time"
+- Use Title Case: "Time Awareness" not "time-awareness"
+- Descriptive: "UV Python Workflow" not just "UV"
 
-**`description:`** - One-line summary
-- What does it do in plain language?
-- This shows in skill listings
+**`tags:`** - Keywords for search/discovery
+- Include trigger words and synonyms
+- Minimum 3 tags recommended
+- Include related tools and concepts
 
-**`when_to_use:`** - Discovery metadata (MOST IMPORTANT)
-- Be extremely specific
-- Include error messages, symptoms, trigger words
-- This is how Codex knows to load your skill
+**`intent:`** - When to use (MOST IMPORTANT)
+- Combines what the skill does with when to trigger it
+- Be extremely specific about user phrases
+- Include error messages and symptoms
 - More detail = better discovery
 
-**`version:`** - Semantic version (start with 1.0.0)
+### Optional Fields
+
+**`version:`** - Semantic version (default: "1.0.0")
 
 **`languages:`** - Which languages/contexts apply
 - `all` for universal skills
-- `[python, javascript]` for language-specific
-- `[typescript]` for single language
+- `["python", "javascript"]` for language-specific
 
-### Example of Good vs Bad when_to_use
+**`risk_level:`** - `low`, `medium`, or `high` for risky operations
+
+**`requires_confirmation:`** - `true` for destructive operations
+
+### Example of Good vs Bad intent
 
 ❌ **Bad - Too vague:**
 ```yaml
-when_to_use: For git workflows
+intent: "For git workflows"
 ```
 
 ✅ **Good - Specific triggers:**
 ```yaml
-when_to_use: When working on multiple features simultaneously, when you need to preserve work-in-progress, when switching contexts frequently, when you see "detached HEAD" state, or when user mentions "git worktrees"
+intent: "Manage multiple git worktrees for parallel feature development. Use when working on multiple features simultaneously, when you need to preserve work-in-progress, when switching contexts frequently, when you see 'detached HEAD' state, or when user mentions 'git worktrees'."
 ```
 
 ## Step-by-Step Skill Creation Process

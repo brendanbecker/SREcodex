@@ -28,3 +28,17 @@
 - Documented Script-First directive standard
 - Created Orchestrator skill for multi-skill composition
 - Updated implementation order (FEAT-002 and FEAT-004 can parallel)
+
+## 2025-11-25: FEAT-001 Completed
+
+- **FEAT-001: Skill Standardization Schema** resolved
+- Created `dotcodex/docs/SKILL-SCHEMA.md` with formal schema specification
+- Created `dotcodex/templates/SKILL.template.md` with standardized structure
+- Migrated `time-awareness` skill to new schema (tags, intent, Q&A examples)
+- Migrated `skill-builder` skill to new schema (updated to teach new format)
+- Created `dotcodex/docs/SKILL-MIGRATION-CHECKLIST.md` for remaining skills
+- Schema consolidates `description` + `when_to_use` → `intent`
+- New `tags` field enables keyword-based discovery
+- `## Examples` section now requires Q&A format (minimum 2 pairs)
+- Remaining skills pending migration: document-parser, uv-python, uv-env-management
+- FEAT-005 (OVERPROMPT Workflow) validated as byproduct
