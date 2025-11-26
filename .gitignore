@@ -1,4 +1,7 @@
 # Ignore installer-generated AGENTS backups
 AGENTS.md.backup.*
-
 dotcodex/AGENTS.md.backup.*
+
+# Ephemeral orchestration scripts (keep .gitkeep)
+dotcodex/scratch/*
+!dotcodex/scratch/.gitkeep

@@ -44,6 +44,31 @@ Do not execute multi-skill tasks turn-by-turn. Instead:
 
 3. Return only the summary to the conversation
 
+## Script Location
+
+**Write ephemeral scripts to `dotcodex/scratch/`**
+
+This directory is gitignored and designated for temporary orchestration scripts.
+
+```bash
+# Example: write script to scratch directory
+cat > dotcodex/scratch/workflow_$(date +%s).py << 'EOF'
+#!/usr/bin/env python3
+# ... script content ...
+EOF
+
+# Execute
+python3 dotcodex/scratch/workflow_*.py
+
+# Clean up (optional - directory is gitignored)
+rm dotcodex/scratch/workflow_*.py
+```
+
+**When to keep scripts:**
+- Reusable workflows → move to `dotcodex/scripts/`
+- Skill-specific utilities → move to skill's `scripts/` subdirectory
+- One-off operations → leave in scratch (auto-ignored)
+
 ## Orchestration Workflow
 
 1. **Discover** needed skills via Librarian

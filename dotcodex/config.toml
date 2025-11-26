@@ -12,6 +12,7 @@ sandbox_mode = "workspace-write"
 allowed_extensions = [".py", ".sh", ".js"]
 execution_timeout = 300  # 5 minutes max for script execution
 cleanup_after_run = true  # Remove temp scripts after execution
+temp_dir = "dotcodex/scratch"  # Directory for ephemeral orchestration scripts
 
 [sandbox]
 # Allow execution of skill scripts
