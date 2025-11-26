@@ -1,3 +1,0 @@
-[console_scripts]
-mcp-index = index_skills:main
-mcp-serve = mcp_server:main
