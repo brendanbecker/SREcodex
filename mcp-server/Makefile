@@ -44,22 +44,7 @@ serve:
 # Quick test - search and show results
 test:
 	@echo "Testing semantic search..."
-	@uv run python -c "\
-import chromadb; \
-from chromadb.utils import embedding_functions; \
-client = chromadb.PersistentClient(path='./chroma_data'); \
-ef = embedding_functions.DefaultEmbeddingFunction(); \
-coll = client.get_collection('srecodex_skills', embedding_function=ef); \
-print(f'Skills indexed: {coll.count()}'); \
-print(); \
-queries = ['parse large documents', 'run python tests', 'find and load skills']; \
-for q in queries: \
-    r = coll.query(query_texts=[q], n_results=2); \
-    print(f'Query: \"{q}\"'); \
-    for i, (id, meta, dist) in enumerate(zip(r['ids'][0], r['metadatas'][0], r['distances'][0])): \
-        print(f'  {i+1}. {meta[\"name\"]} (relevance: {1-dist:.2f})'); \
-    print(); \
-"
+	@uv run python test_search.py
 
 # Open MCP Inspector for interactive testing
 inspect:

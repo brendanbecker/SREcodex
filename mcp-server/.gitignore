@@ -1,0 +1,10 @@
+# ChromaDB data (regenerated via `make index`)
+chroma_data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# uv
+.python-version
