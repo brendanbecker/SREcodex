@@ -46,28 +46,29 @@ Do not execute multi-skill tasks turn-by-turn. Instead:
 
 ## Script Location
 
-**Write ephemeral scripts to `dotcodex/scratch/`**
+**Write ephemeral scripts to `~/.codex/scratch/`**
 
-This directory is gitignored and designated for temporary orchestration scripts.
+This directory is designated for temporary orchestration scripts and won't pollute the user's project.
 
 ```bash
 # Example: write script to scratch directory
-cat > dotcodex/scratch/workflow_$(date +%s).py << 'EOF'
+mkdir -p ~/.codex/scratch
+cat > ~/.codex/scratch/workflow_$(date +%s).py << 'EOF'
 #!/usr/bin/env python3
 # ... script content ...
 EOF
 
 # Execute
-python3 dotcodex/scratch/workflow_*.py
+python3 ~/.codex/scratch/workflow_*.py
 
-# Clean up (optional - directory is gitignored)
-rm dotcodex/scratch/workflow_*.py
+# Clean up after execution
+rm ~/.codex/scratch/workflow_*.py
 ```
 
 **When to keep scripts:**
-- Reusable workflows → move to `dotcodex/scripts/`
+- Reusable workflows → move to `~/.codex/scripts/`
 - Skill-specific utilities → move to skill's `scripts/` subdirectory
-- One-off operations → leave in scratch (auto-ignored)
+- One-off operations → delete after execution
 
 ## Orchestration Workflow
 
