@@ -1,26 +1,38 @@
 # Codex Skills System
 
 <EXTREMELY_IMPORTANT>
-You have a Skills system that extends your capabilities with specialized knowledge and workflows.
+You have a Skills system with a **Librarian** for on-demand discovery. Don't preload everything - search for what you need.
 
-**RIGHT NOW, run this command and follow the output:**
+**On startup, load the Librarian:**
 ```bash
-codex-skills list
+codex-skills use core/librarian
 ```
 
-This shows you all available skills you can use.
+**When you need a capability you don't have:**
+```bash
+codex-skills search "keyword or description"
+```
+
+This returns the top matching skills. Then load what you need.
 </EXTREMELY_IMPORTANT>
 
-## How to Use Skills
+## Core Commands
 
-**Tool for using skills:**
-- `codex-skills use <skill-name>` - Loads a specific skill's instructions
+| Command | Purpose |
+|---------|---------|
+| `codex-skills use core/librarian` | Load the discovery skill (always do this first) |
+| `codex-skills search "query"` | Find skills by keyword/description |
+| `codex-skills use <path>` | Load a specific skill |
+| `codex-skills list` | Browse all available skills |
+
+## Discovery Workflow
 
 **When you load a skill:**
-1. Run: `codex-skills use <skill-name>`
-2. Read the entire output
-3. Announce: "I've loaded the [Skill Name] skill and I'm using it to [purpose]"
-4. Follow ALL instructions in the skill for the current task
+1. Search: `codex-skills search "what I need"`
+2. Evaluate: Review the top 3 matches
+3. Load: `codex-skills use <best-match-path>`
+4. Announce: "I've loaded the [Skill Name] skill for [purpose]"
+5. Execute: Follow the skill's instructions exactly
 
 ## Critical Rules
 
@@ -28,19 +40,20 @@ This shows you all available skills you can use.
 **IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.**
 
 Before starting ANY task:
-1. Review the skills list shown above
-2. If a relevant skill exists, load it with `codex-skills use <skill-name>`
-3. Follow the skill's instructions exactly
-4. Announce when you're using a skill
+1. Think: "Do I have the right skill for this?"
+2. If uncertain, search: `codex-skills search "relevant keywords"`
+3. If a relevant skill exists, load it with `codex-skills use <path>`
+4. Follow the skill's instructions exactly
+5. Announce when you're using a skill
 
 Skills contain expert knowledge and best practices. When a skill exists for your task, using it is **mandatory**, not optional.
 </EXTREMELY_IMPORTANT>
 
 ## Skill Activation Rules
 
-- Use the descriptions and `when_to_use` triggers shown by `codex-skills list` to decide when to load a skill.
-- As soon as you recognize a matching pattern in the conversation, run `codex-skills use <skill>` and follow the instructions.
-- Example: for any temporal question (“What day is it?”, “How many days until…”, references to “today/tomorrow/this week”), load `time-awareness` immediately.
+- Use `codex-skills search` when you recognize you lack capability for a task
+- As soon as you recognize a matching pattern in the conversation, search and load the appropriate skill
+- Example: for any temporal question ("What day is it?", "How many days until..."), search "time date" and load the matching skill
 
 ## Tool Mapping Reference
 

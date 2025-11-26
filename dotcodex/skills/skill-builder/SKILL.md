@@ -1,30 +1,27 @@
 ---
-name: "Skill Builder"
-tags: ["skill", "create", "template", "workflow", "pattern", "reusable", "document", "technique", "instructions", "metadata"]
-intent: "Guide for creating new skills following best practices. Use when user asks to 'create a skill', 'make a skill', 'document a technique', 'capture a workflow', or 'add instructions for future sessions'. Also triggers when you discover a reusable pattern worth standardizing, when user says 'write this down for next time', or when a process keeps recurring and should be formalized."
-version: "1.0.0"
+name: Skill Builder
+description: Guide for creating new skills following best practices. Creates properly formatted SKILL.md files with YAML frontmatter, clear structure, and effective discovery metadata.
+when_to_use: When user asks to create a new skill, document a technique, capture a workflow, or add instructions for future sessions. When you discover a pattern worth reusing.
+version: 1.0.0
 languages: all
 ---
 
 # Skill Builder
 
-## Usage
+## Overview
 
 This skill teaches you how to create new skills properly. Skills are reusable instruction sets that extend your capabilities with specialized knowledge, workflows, and best practices.
 
 **Core principle:** Write skills that future instances of Codex can discover and apply without human intervention.
 
-**Use this skill when:**
+## When to Use This Skill
+
+Use this skill when:
 - User asks to "create a skill" or "make a skill"
 - You discover a technique that should be reusable
 - User wants to document a workflow or pattern
 - You're asked to "write this down for next time"
 - A process keeps recurring and should be standardized
-
-**Don't use when:**
-- Creating one-off solutions specific to a single project
-- Documenting project-specific code (use project docs instead)
-- The technique is already well-documented elsewhere
 
 ## What Makes a Good Skill
 
@@ -40,53 +37,53 @@ This skill teaches you how to create new skills properly. Skills are reusable in
 - ❌ Things already well-documented elsewhere
 - ❌ Personal preferences without broad applicability
 
-## Examples
-
-User: "Can you write down how we debugged that async issue so we don't forget next time?"
-Agent: Create a new skill at `dotcodex/skills/async-debugging/SKILL.md` with YAML frontmatter containing name, tags, and intent. Include step-by-step debugging process and examples of common async issues.
-
-User: "I keep doing this same git workflow. Can you make it a skill?"
-Agent: Ask clarifying questions about trigger phrases and edge cases, then create a skill with rich `tags` for discovery and concrete examples in the `## Examples` section.
-
-User: "Create a skill for handling environment variables"
-Agent: Create `dotcodex/skills/env-var-handling/SKILL.md` with tags like ["env", "environment", "config", "secrets", ".env"], detailed intent covering when to use it, and Q&A examples demonstrating proper usage.
-
 ## SKILL.md Structure
 
 Every skill must have this structure:
 
 ```markdown
 ---
-name: "Human-Readable Skill Name"
-tags: ["keyword1", "keyword2", "keyword3"]
-intent: "Comprehensive description of when to use this skill. Include trigger phrases, user requests, symptoms, and specific use cases."
-version: "1.0.0"
-languages: all
+name: Human-Readable Skill Name
+description: One-line summary of what this does
+when_to_use: Detailed triggers, symptoms, and situations when this applies
+version: 1.0.0
+languages: all | [python, javascript] | specific language
 ---
 
 # Skill Name
 
-## Usage
+## Overview
 2-3 sentence explanation of what this skill does and the core principle.
-- When to use (bullet list)
-- When NOT to use
 
-## Examples
-User: "[Common request phrasing]"
-Agent: [Exact action or response]
+## When to Use
+Bullet list of:
+- Specific triggers (error messages, situations)
+- Symptoms that indicate you need this
+- Types of tasks where this applies
+- When NOT to use this
 
-User: "[Edge case or variation]"
-Agent: [Appropriate response]
+## Core Pattern (if showing before/after)
+Brief example showing the wrong way and the right way.
+
+## Quick Reference
+Table or bullet list of common operations/commands for quick scanning.
 
 ## Implementation
-Step-by-step instructions with code examples.
+Step-by-step instructions:
+1. First step
+2. Second step
+3. Third step
 
-## Common Mistakes (optional)
-- ❌ Problem description
-- ✅ How to fix it
+Include code examples inline when relevant.
+
+## Common Mistakes
+What goes wrong + how to fix it:
+- ❌ Don't do this
+- ✅ Do this instead
+
+## Examples
+Real-world concrete examples of using this skill.
 ```
-
-See `dotcodex/docs/SKILL-SCHEMA.md` for the complete schema specification.
 
 ## The Critical YAML Frontmatter
 
@@ -95,42 +92,36 @@ The YAML section at the top is **critical for discovery**. Codex finds skills by
 ### Required Fields
 
 **`name:`** - Human-readable title
-- Use Title Case: "Time Awareness" not "time-awareness"
-- Descriptive: "UV Python Workflow" not just "UV"
+- Use active voice: "Creating Skills" not "Skill Creation"
+- Descriptive: "Time Awareness" not just "Time"
 
-**`tags:`** - Keywords for search/discovery
-- Include trigger words and synonyms
-- Minimum 3 tags recommended
-- Include related tools and concepts
+**`description:`** - One-line summary
+- What does it do in plain language?
+- This shows in skill listings
 
-**`intent:`** - When to use (MOST IMPORTANT)
-- Combines what the skill does with when to trigger it
-- Be extremely specific about user phrases
-- Include error messages and symptoms
+**`when_to_use:`** - Discovery metadata (MOST IMPORTANT)
+- Be extremely specific
+- Include error messages, symptoms, trigger words
+- This is how Codex knows to load your skill
 - More detail = better discovery
 
-### Optional Fields
-
-**`version:`** - Semantic version (default: "1.0.0")
+**`version:`** - Semantic version (start with 1.0.0)
 
 **`languages:`** - Which languages/contexts apply
 - `all` for universal skills
-- `["python", "javascript"]` for language-specific
+- `[python, javascript]` for language-specific
+- `[typescript]` for single language
 
-**`risk_level:`** - `low`, `medium`, or `high` for risky operations
-
-**`requires_confirmation:`** - `true` for destructive operations
-
-### Example of Good vs Bad intent
+### Example of Good vs Bad when_to_use
 
 ❌ **Bad - Too vague:**
 ```yaml
-intent: "For git workflows"
+when_to_use: For git workflows
 ```
 
 ✅ **Good - Specific triggers:**
 ```yaml
-intent: "Manage multiple git worktrees for parallel feature development. Use when working on multiple features simultaneously, when you need to preserve work-in-progress, when switching contexts frequently, when you see 'detached HEAD' state, or when user mentions 'git worktrees'."
+when_to_use: When working on multiple features simultaneously, when you need to preserve work-in-progress, when switching contexts frequently, when you see "detached HEAD" state, or when user mentions "git worktrees"
 ```
 
 ## Step-by-Step Skill Creation Process
@@ -157,19 +148,17 @@ Avoid:
 
 ### Step 3: Write Discovery Metadata
 
-This is THE MOST IMPORTANT part. Write `tags` and `intent` carefully:
+This is THE MOST IMPORTANT part. Write `when_to_use` with:
 
-**For `tags` - include keywords for discovery:**
-- Tool names: "git", "pytest", "docker"
-- Actions: "debug", "test", "deploy"
-- Concepts: "async", "parallel", "concurrent"
-- Minimum 3 tags, aim for 5-10
-
-**For `intent` - be specific about triggers:**
+**Include specific triggers:**
 - Error messages: "ENOENT", "Cannot find module"
 - Symptoms: "flaky tests", "race conditions"
+- Keywords: "async", "parallel", "concurrent"
 - User phrases: "how do I...", "keep getting..."
+
+**Include context:**
 - When in the workflow: "before writing code", "when debugging"
+- Project types: "React projects", "CLI tools"
 - Situations: "when tests are slow", "when merging is difficult"
 
 ### Step 4: Write Clear Instructions
@@ -315,13 +304,13 @@ codex-skills use your-skill-name
 
 ## Common Mistakes When Creating Skills
 
-### ❌ Vague intent
+### ❌ Vague when_to_use
 ```yaml
-intent: "For testing"
+when_to_use: For testing
 ```
 ✅ **Better:**
 ```yaml
-intent: "Best practices for writing and debugging tests. Use when writing unit tests, when tests are flaky, when you see 'test timeout' errors, or when mocking external dependencies."
+when_to_use: When writing unit tests, when tests are flaky, when you see "test timeout" errors, when mocking external dependencies
 ```
 
 ### ❌ No concrete examples
@@ -362,10 +351,10 @@ When files are locked, you'll see EBUSY errors. Use graceful-fs to retry automat
 When creating a new skill, verify:
 
 **Discovery:**
-- [ ] `tags` array has 3+ keywords for search
-- [ ] `intent` includes specific trigger words
-- [ ] `intent` includes error messages if applicable
-- [ ] `intent` includes symptoms/situations
+- [ ] `when_to_use` includes specific trigger words
+- [ ] `when_to_use` includes error messages if applicable
+- [ ] `when_to_use` includes symptoms/situations
+- [ ] Description is clear and specific
 - [ ] Name is descriptive and searchable
 
 **Content:**
@@ -415,37 +404,24 @@ mkdir -p "${skills_dir}/env-var-handling"
 **You create:**
 ```markdown
 ---
-name: "Environment Variable Handling"
-tags: ["env", "environment", "config", "secrets", "dotenv", ".env", "configuration", "variables"]
-intent: "Best practices for managing environment variables securely in applications. Use when setting up new projects, when you see hardcoded secrets, when configuring deployments, when user mentions 'env vars' or '.env files', or when debugging configuration issues."
-version: "1.0.0"
+name: Environment Variable Handling
+description: Best practices for managing environment variables securely in applications
+when_to_use: When setting up new projects, when you see hardcoded secrets, when configuring deployments, when user mentions "env vars" or ".env files", when debugging configuration issues
+version: 1.0.0
 languages: all
 ---
 
 # Environment Variable Handling
 
-## Usage
-
+## Overview
 Proper environment variable management keeps secrets out of code, enables configuration across environments, and prevents security vulnerabilities.
 
-**Use this skill when:**
+## When to Use
 - Starting a new project that needs configuration
 - See hardcoded API keys or secrets in code
 - Deploying to different environments (dev/staging/prod)
 - User mentions environment variables or configuration
 - Debugging "works on my machine" issues
-
-**Don't use when:**
-- Configuration is truly static and non-sensitive
-- Using a dedicated secrets manager (Vault, AWS Secrets Manager)
-
-## Examples
-
-User: "I have API keys hardcoded in my code, how do I fix this?"
-Agent: Move secrets to environment variables. Create a `.env` file with `API_KEY=your-key`, add `.env` to `.gitignore`, then load with `dotenv` and access via `os.environ.get('API_KEY')`.
-
-User: "My app works locally but fails in production with missing config"
-Agent: Check that all required environment variables are set in the production environment. Create a `.env.example` template listing required vars, and add startup validation to fail fast with clear error messages.
 
 ## Core Pattern
 
@@ -531,9 +507,9 @@ if not api_key:
 - Use UPPER_SNAKE_CASE consistently
 - Not `apiKey` or `api-key`
 
-## Implementation Examples
+## Examples
 
-**Python Flask app:**
+**Example 1: Python Flask app**
 ```python
 from flask import Flask
 import os
@@ -546,7 +522,7 @@ if not app.config['SECRET_KEY']:
     raise ValueError("SECRET_KEY must be set")
 ```
 
-**Node.js Express app:**
+**Example 2: Node.js Express app**
 ```javascript
 require('dotenv').config()
 

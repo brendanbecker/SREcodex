@@ -1,29 +1,32 @@
 ---
-name: "Time Awareness"
-tags: ["date", "time", "today", "tomorrow", "schedule", "deadline", "calendar", "timezone", "week", "month", "current"]
-intent: "Provides current date/time information for temporal queries and calculations. Use when user asks about dates, times, schedules, 'today', 'tomorrow', 'this week', deadlines, or anything requiring knowledge of current time. Triggers on relative time references ('yesterday', 'next Friday'), temporal calculations ('days until'), scheduling tasks, or any query that requires knowing the current date/time. Also use when user mentions 'current events' or 'recent' without providing specific dates."
-version: "1.0.0"
+name: Time Awareness
+description: Provides current date/time information for temporal queries and calculations
+when_to_use: When user asks about dates, times, schedules, "today", "tomorrow", "this week", deadlines, or anything requiring knowledge of current time. When you see relative time references or temporal calculations needed.
+version: 1.0.0
 languages: all
 ---
 
 # Time Awareness
 
-## Usage
+## Overview
 
 This skill ensures accurate, time-aware responses by teaching you to use system date commands for current time information instead of guessing or relying on outdated knowledge.
 
-**Core principle:** The `date` command is your source of truth for all time-related information. Always run it; never guess.
+## When to Use
 
-**Use this skill when:**
+**Use this skill whenever:**
 - User asks "what day is it?" or "what's the date?"
 - Query contains relative time words: "today", "tomorrow", "yesterday", "this week", "next month"
 - User asks about deadlines or time-based planning
 - User asks "how long until [date]?" or needs time calculations
 - Discussion involves "current events" or "recent" happenings
+- ANY task requiring knowledge of the current date/time
 
-**Don't use when:**
-- User provides explicit dates that don't require current time knowledge
-- Historical date questions that don't need today's reference
+**Symptoms indicating you need this skill:**
+- User references "now" or "current" without providing specific dates
+- Questions about day of week or current month
+- Scheduling or calendar-related queries
+- Comparisons to "today" or "this year"
 
 ## Core Pattern
 
@@ -116,19 +119,38 @@ When times matter, always note the timezone.
 ### ❌ Don't use vague phrases
 Instead of "recently" or "a few weeks ago", get specific dates.
 
-## Examples
+## Real-World Examples
 
-User: "What day is it today?"
-Agent: Run `date '+%Y-%m-%d %A'` to get the current date and day of week, then respond with full context like "Today is Friday, November 15, 2024."
+**Example 1: Simple date query**
+```
+User: "What day is today?"
+You: [Run: date '+%Y-%m-%d %A']
+Output: 2024-11-15 Friday
+You: "Today is Friday, November 15, 2024"
+```
 
+**Example 2: Relative date calculation**
+```
 User: "What's next Wednesday's date?"
-Agent: Run `date -d "next wednesday" '+%Y-%m-%d %A'` and respond with "Next Wednesday is November 20, 2024."
+You: [Run: date -d "next wednesday" '+%Y-%m-%d %A']
+Output: 2024-11-20 Wednesday
+You: "Next Wednesday is November 20, 2024"
+```
 
+**Example 3: Days until deadline**
+```
 User: "How many days until Christmas?"
-Agent: Calculate using `echo $(( ($(date -d "2024-12-25" +%s) - $(date +%s)) / 86400 ))` and respond with the count and target date: "There are 40 days until Christmas (December 25, 2024)."
+You: [Run commands to calculate]
+You: "There are 40 days until Christmas (December 25, 2024)"
+```
 
+**Example 4: Time-aware recommendation**
+```
 User: "Should I work on this today?"
-Agent: Run `date '+%A'` to check the day, then provide context-aware advice: "Today is Saturday. If this isn't urgent, you might want to wait until Monday to ensure your team can review and collaborate."
+You: [Run: date '+%A']
+Output: Saturday
+You: "Today is Saturday. If this isn't urgent, you might want to wait until Monday to ensure your team can review and collaborate."
+```
 
 ## Additional Capabilities
 

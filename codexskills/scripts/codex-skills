@@ -72,7 +72,7 @@ cmd_list() {
 cmd_use() {
     local skill_name="$1"
     local skill_file="${SKILLS_DIR}/${skill_name}/SKILL.md"
-    
+
     if [[ ! -f "${skill_file}" ]]; then
         echo "Error: Skill '${skill_name}' not found"
         echo ""
@@ -81,7 +81,7 @@ cmd_use() {
             xargs -I{} dirname {} | xargs -I{} basename {} | sort || echo "  (none)"
         return 1
     fi
-    
+
     echo "# Using Skill: ${skill_name}"
     echo ""
     echo "You are now following the '${skill_name}' skill instructions."
@@ -89,6 +89,110 @@ cmd_use() {
     echo "---"
     echo ""
     cat "${skill_file}"
+}
+
+cmd_search() {
+    local query="$1"
+    local query_lower=$(echo "$query" | tr '[:upper:]' '[:lower:]')
+
+    if [[ ! -d "${SKILLS_DIR}" ]]; then
+        echo "No skills directory found at: ${SKILLS_DIR}"
+        return 1
+    fi
+
+    echo "# Skill Search Results for: \"${query}\""
+    echo ""
+
+    local matches=()
+    local scores=()
+
+    while IFS= read -r -d '' skill_file; do
+        local skill_dir=$(dirname "${skill_file}")
+        local skill_path=${skill_dir#${SKILLS_DIR}/}
+        local score=0
+
+        # Parse YAML frontmatter
+        local name="" tags="" intent=""
+        local in_frontmatter=false
+
+        while IFS= read -r line; do
+            if [[ "$line" == "---" ]]; then
+                if $in_frontmatter; then
+                    break
+                else
+                    in_frontmatter=true
+                    continue
+                fi
+            fi
+
+            if $in_frontmatter; then
+                if [[ "$line" =~ ^name:[[:space:]]*(.+)$ ]]; then
+                    name=$(echo "${BASH_REMATCH[1]}" | sed 's/^["\x27]\|["\x27]$//g')
+                elif [[ "$line" =~ ^tags:[[:space:]]*(.+)$ ]]; then
+                    tags=$(echo "${BASH_REMATCH[1]}" | tr '[:upper:]' '[:lower:]')
+                elif [[ "$line" =~ ^intent:[[:space:]]*(.+)$ ]]; then
+                    intent=$(echo "${BASH_REMATCH[1]}" | tr '[:upper:]' '[:lower:]')
+                fi
+            fi
+        done < "${skill_file}"
+
+        # Score matching (higher = better)
+        # Exact tag match: 100 points
+        if [[ "$tags" == *"\"${query_lower}\""* ]] || [[ "$tags" == *"'${query_lower}'"* ]]; then
+            ((score += 100))
+        fi
+
+        # Tag contains query: 50 points
+        if [[ "$tags" == *"${query_lower}"* ]]; then
+            ((score += 50))
+        fi
+
+        # Intent contains query: 30 points
+        if [[ "$intent" == *"${query_lower}"* ]]; then
+            ((score += 30))
+        fi
+
+        # Name contains query: 20 points
+        local name_lower=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+        if [[ "$name_lower" == *"${query_lower}"* ]]; then
+            ((score += 20))
+        fi
+
+        # Path contains query: 10 points
+        local path_lower=$(echo "$skill_path" | tr '[:upper:]' '[:lower:]')
+        if [[ "$path_lower" == *"${query_lower}"* ]]; then
+            ((score += 10))
+        fi
+
+        if [[ $score -gt 0 ]]; then
+            matches+=("${score}|${skill_path}|${name}|${intent:0:100}")
+        fi
+    done < <(find "${SKILLS_DIR}" -name "SKILL.md" -type f -print0)
+
+    if [[ ${#matches[@]} -eq 0 ]]; then
+        echo "No skills found matching \"${query}\"."
+        echo ""
+        echo "Try:"
+        echo "  - Different keywords"
+        echo "  - codex-skills list (to see all available)"
+        return 0
+    fi
+
+    # Sort by score (descending) and show top 3
+    local sorted=$(printf '%s\n' "${matches[@]}" | sort -t'|' -k1 -rn | head -3)
+    local count=0
+
+    while IFS='|' read -r score path name intent_preview; do
+        count=$((count + 1))
+        echo "## ${count}. ${name}"
+        echo "- **Path**: ${path}"
+        echo "- **Intent**: ${intent_preview}..."
+        echo "- **Load**: \`codex-skills use ${path}\`"
+        echo ""
+    done <<< "$sorted"
+
+    echo "---"
+    echo "Use \`codex-skills use <path>\` to load a skill."
 }
 
 # Main command dispatcher
@@ -103,12 +207,20 @@ case "${1:-}" in
         fi
         cmd_use "$2"
         ;;
+    search)
+        if [[ $# -lt 2 ]]; then
+            echo "Usage: codex-skills search <query>"
+            exit 1
+        fi
+        cmd_search "$2"
+        ;;
     *)
-        echo "Usage: codex-skills {list|use} [args]"
+        echo "Usage: codex-skills {list|use|search} [args]"
         echo ""
         echo "Commands:"
-        echo "  list           List all available skills"
-        echo "  use <name>     Load and use a specific skill"
+        echo "  list             List all available skills"
+        echo "  use <name>       Load and use a specific skill"
+        echo "  search <query>   Search skills by keyword/description"
         exit 1
         ;;
 esac

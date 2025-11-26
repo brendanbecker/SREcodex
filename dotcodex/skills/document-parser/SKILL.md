@@ -1,14 +1,14 @@
 ---
-name: "Document Parser"
-tags: ["document", "parse", "chunk", "RAG", "large", "token", "structure", "metadata", "markdown", "hierarchy"]
-intent: "Parse large documents that exceed context limits into structured sections with abstracts, metadata, and hierarchies. Use when encountering documents over 25k tokens, when user mentions 'parse document', 'too large to read', or 'context limit exceeded'. Triggers on analyzing research papers or technical documentation, extracting structure from markdown files, building RAG systems that need chunked content, or when user requests 'extract metadata' or 'build document hierarchy'. Apply layout-aware hierarchical chunking principles to preserve semantic structure."
-version: "1.0.0"
+name: Document Parser
+description: Parse large documents that exceed context limits into structured sections with abstracts, metadata, and hierarchies. This skill should be used when encountering documents over the context limit (typically 25k+ tokens) or when a user explicitly requests document parsing. Apply layout-aware hierarchical chunking principles to preserve semantic structure.
+when_to_use: When encountering documents over 25k tokens, when user mentions "parse document", "too large to read", "context limit exceeded", when analyzing research papers or technical documentation, when extracting structure from markdown files, when building RAG systems that need chunked content, when user requests "extract metadata" or "build document hierarchy"
+version: 1.0.0
 languages: all
 ---
 
 # Document Parser
 
-## Usage
+## Overview
 
 This skill provides tools and workflows for parsing large documents that exceed context limits. It extracts hierarchical structure, generates section abstracts, and extracts metadata using layout-aware hierarchical chunking principles optimized for RAG systems.
 
@@ -321,17 +321,58 @@ pip install tiktoken markdown beautifulsoup4
 
 ## Examples
 
-User: "This research paper is 47k tokens, I can't read it all at once"
-Agent: Parse the document to extract structure and metadata. Run `python3 scripts/parse_document_structure.py paper.md --map outline.md` to get a hierarchical section map with token counts. Then run `python3 scripts/extract_metadata.py paper.md` to extract tables, benchmarks, and key terms. Review the outline.md to identify relevant sections for deep-dive reading.
+### Example 1: Research Paper (47k tokens)
 
-User: "Extract the structure and key information from this API documentation"
-Agent: Run `python3 scripts/parse_document_structure.py api_docs.md --map api_outline.md` to build a navigable section map. Then run `python3 scripts/extract_metadata.py api_docs.md` to extract all code examples, endpoint tables, and technical terms. The structure.json and metadata.json files provide machine-readable output for building searchable indexes.
+**Input:** 47k token research paper on RAG systems
 
-User: "I need to compare methodologies across three LLM evaluation papers"
-Agent: Parse all documents in sequence with `for doc in paper*.md; do python3 scripts/parse_document_structure.py "$doc" && python3 scripts/extract_metadata.py "$doc"; done`. Then compare methodologies using `jq -r '.sections[] | select(.title | contains("Method")) | .title' *_structure.json` and benchmarks using `jq -r '.benchmarks[] | select(.metric == "Accuracy")' *_metadata.json`.
+**Commands:**
+```bash
+python3 scripts/parse_document_structure.py rag_paper.md
+python3 scripts/extract_metadata.py rag_paper.md
+```
 
-User: "Build a RAG index from this technical documentation"
-Agent: First parse the document structure to get optimal chunks: `python3 scripts/parse_document_structure.py docs.md`. The output structure.json contains sections sized 400-900 tokens with hierarchical context. Load structure.json and embed sections where `400 <= token_count <= 900` for optimal retrieval. Use metadata.json for supplementary structured search (tables, code blocks).
+**Results:**
+- 56 sections extracted
+- 54 tables identified
+- 145 benchmarks found
+- 71 techniques cataloged
+- Section map showing 3-level hierarchy
+- Average section size: 839 tokens (within target range)
+
+### Example 2: Technical Documentation
+
+**Input:** API documentation with code examples
+
+**Commands:**
+```bash
+python3 scripts/parse_document_structure.py api_docs.md --map api_outline.md
+python3 scripts/extract_metadata.py api_docs.md
+```
+
+**Use results to:**
+- Navigate API structure via outline
+- Extract all code examples for testing
+- Catalog all endpoints from tables
+- Build searchable knowledge base
+
+### Example 3: Multi-Document Comparison
+
+**Input:** 3 papers on LLM evaluation
+
+**Workflow:**
+```bash
+# Parse all documents
+for doc in paper*.md; do
+  python3 scripts/parse_document_structure.py "$doc"
+  python3 scripts/extract_metadata.py "$doc"
+done
+
+# Compare methodologies
+jq -r '.sections[] | select(.title | contains("Method")) | .title' *_structure.json
+
+# Compare benchmarks
+jq -r '.benchmarks[] | select(.metric == "Accuracy") | "\(.value) - \(.context)"' *_metadata.json
+```
 
 ## Testing Your Parsing
 

@@ -42,3 +42,21 @@
 - `## Examples` section now requires Q&A format (minimum 2 pairs)
 - Remaining skills pending migration: document-parser, uv-python, uv-env-management
 - FEAT-005 (OVERPROMPT Workflow) validated as byproduct
+
+## 2025-11-25: FEAT-002 Completed
+
+- **FEAT-002: Librarian Dynamic Discovery Skill** resolved
+- Created `dotcodex/skills/core/librarian/SKILL.md` with FEAT-001 compliant schema
+- Librarian includes 4 discovery workflow examples
+- Added `search` command to `codex-skills` script with scoring algorithm:
+  - Exact tag match: 100 points
+  - Tag contains query: 50 points
+  - Intent contains query: 30 points
+  - Name contains query: 20 points
+  - Path contains query: 10 points
+- Created `dotcodex/scripts/index-skills.sh` for INDEX.md generation
+- Updated `dotcodex/AGENTS.md` with Librarian-first discovery workflow
+- Removed static skill listing instructions in favor of on-demand search
+- Fixed `((count++))` bug in bash with `set -e` (exit on 0 return)
+- Search returns top 3 matches with intent summaries
+- End-to-end tested: search finds skills, use command loads them
