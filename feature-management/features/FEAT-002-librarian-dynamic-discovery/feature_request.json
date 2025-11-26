@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-002",
+  "title": "Librarian Dynamic Discovery Skill",
+  "component": "dotcodex/skills/core",
+  "priority": "P1",
+  "status": "new",
+  "type": "feature-request",
+  "created_date": "2025-11-25",
+  "updated_date": "2025-11-25",
+  "assigned_to": null,
+  "tags": ["skills", "discovery", "librarian", "lazy-loading", "search", "codex"],
+  "estimated_effort": "medium",
+  "dependencies": ["FEAT-001"],
+  "description": "Create a foundational 'Librarian' skill that enables lazy-loading of capabilities on demand, replacing the current approach of statically listing all available skills in the context window. When the agent encounters a task outside its currently loaded context, the Librarian searches the skills repository (initially via grep/find), reads the relevant SKILL.md, and dynamically acquires the capability. This reduces context bloat, improves relevance, and establishes the behavioral pattern for intelligent tool discovery.",
+  "business_value": "high",
+  "technical_complexity": "medium",
+  "user_impact": "Reduces token consumption by ~85%, improves response relevance by loading only needed skills"
+}

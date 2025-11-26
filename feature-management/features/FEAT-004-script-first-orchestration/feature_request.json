@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-004",
+  "title": "Script-First Programmatic Orchestration",
+  "component": "dotcodex/config",
+  "priority": "P2",
+  "status": "new",
+  "type": "enhancement",
+  "created_date": "2025-11-25",
+  "updated_date": "2025-11-25",
+  "assigned_to": null,
+  "tags": ["orchestration", "scripts", "programmatic", "composition", "high-volume", "codex"],
+  "estimated_effort": "medium",
+  "dependencies": ["FEAT-001"],
+  "description": "Enable complex, high-volume operations to succeed by forcing the agent to write and execute a single script rather than attempting chat-based iteration one command per turn. This requires updating config.toml to enable workspace-write sandbox mode and adding a standardized directive to relevant SKILL.md files. This pattern also handles skill composition—when a task requires multiple skills, Claude writes orchestration code that calls them together.",
+  "business_value": "high",
+  "technical_complexity": "medium",
+  "user_impact": "Enables reliable execution of bulk operations and complex multi-skill workflows that previously failed or timed out"
+}

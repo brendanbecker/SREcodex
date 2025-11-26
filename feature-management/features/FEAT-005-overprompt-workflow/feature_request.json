@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-005",
+  "title": "OVERPROMPT Workflow Implementation",
+  "component": "feature-management",
+  "priority": "P1",
+  "status": "new",
+  "type": "enhancement",
+  "created_date": "2025-11-25",
+  "updated_date": "2025-11-25",
+  "assigned_to": null,
+  "tags": ["workflow", "overprompt", "automation", "codex"],
+  "estimated_effort": "small",
+  "dependencies": [],
+  "description": "Implement a lightweight OVERPROMPT workflow for SREcodex that guides Codex through feature processing without requiring external subagents. The workflow should be self-contained, executable by reading OVERPROMPT.md, and support incremental enhancement as patterns emerge.",
+  "business_value": "high",
+  "technical_complexity": "low",
+  "user_impact": "Enables consistent, repeatable feature processing with clear status tracking"
+}

@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-001",
+  "title": "Skill Standardization Schema",
+  "component": "dotcodex/skills",
+  "priority": "P1",
+  "status": "new",
+  "type": "enhancement",
+  "created_date": "2025-11-25",
+  "updated_date": "2025-11-25",
+  "assigned_to": null,
+  "tags": ["skills", "schema", "yaml", "few-shot", "standardization"],
+  "estimated_effort": "medium",
+  "dependencies": [],
+  "description": "Establish a consistent structure for all SKILL.md files by introducing mandatory YAML frontmatter containing searchable metadata (name, tags, intent) and a standardized ## Examples section with few-shot Q&A pairs. This separates 'searchable signal' from 'executable payload,' enabling future indexing while improving model accuracy through concrete usage examples.",
+  "business_value": "high",
+  "technical_complexity": "low",
+  "user_impact": "Enables semantic skill discovery and improves agent accuracy through few-shot examples"
+}

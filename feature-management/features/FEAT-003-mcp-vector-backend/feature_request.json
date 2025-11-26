@@ -1,0 +1,18 @@
+{
+  "feature_id": "FEAT-003",
+  "title": "MCP & Vector Search Backend",
+  "component": "mcp-server",
+  "priority": "P2",
+  "status": "new",
+  "type": "feature-request",
+  "created_date": "2025-11-25",
+  "updated_date": "2025-11-25",
+  "assigned_to": null,
+  "tags": ["mcp", "vector-search", "chromadb", "semantic", "rag", "embeddings", "infrastructure"],
+  "estimated_effort": "large",
+  "dependencies": ["FEAT-001", "FEAT-002"],
+  "description": "Build the infrastructure to upgrade the Librarian from keyword search to semantic search using ChromaDB as a local vector store and a custom MCP server as the bridge to Codex. The ingestion pipeline parses YAML frontmatter, embeds the intent field, and stores full skill documents for retrieval. The MCP server exposes a search_skills() tool that converts natural language queries to vectors and returns complete, executable skill files—solving the RAG chunking problem where partial code retrieval breaks functionality.",
+  "business_value": "high",
+  "technical_complexity": "high",
+  "user_impact": "Enables natural language skill discovery with semantic understanding, dramatically improving search relevance over keyword matching"
+}
