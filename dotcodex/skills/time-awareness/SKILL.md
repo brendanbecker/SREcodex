@@ -1,5 +1,5 @@
 ---
-name: Time Awareness
+name: "Time Awareness"
 tags: ["date", "time", "today", "tomorrow", "schedule", "deadline", "calendar", "timezone", "week", "month", "current"]
 intent: "Provides current date/time information for temporal queries and calculations. Use when user asks about dates, times, schedules, 'today', 'tomorrow', 'this week', deadlines, or anything requiring knowledge of current time. Triggers on relative time references ('yesterday', 'next Friday'), temporal calculations ('days until'), scheduling tasks, or any query that requires knowing the current date/time. Also use when user mentions 'current events' or 'recent' without providing specific dates."
 version: "1.0.0"

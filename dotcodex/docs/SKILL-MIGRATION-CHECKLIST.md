@@ -15,9 +15,8 @@ This document tracks the migration of existing skills from the legacy format (`d
 |-------|--------|-------|
 | `time-awareness` | **Migrated** | Baseline example |
 | `skill-builder` | **Migrated** | Meta-skill, updated to teach new schema |
-| `document-parser` | Pending | Complex skill with scripts |
-| `uv-python` | Pending | Universal UV workflow |
-| `uv-env-management` | Pending | Workspace-specific system |
+| `document-parser` | **Migrated** | Complex skill with scripts, Q&A examples added |
+| `uv-python` | **Migrated** | Universal UV workflow, Q&A examples added |
 
 ---
 
@@ -100,59 +99,15 @@ Run through the validation checklist:
 
 ---
 
-## Pending Skills Details
-
-### document-parser
-
-**Location:** `dotcodex/skills/document-parser/SKILL.md`
-
-**Current State:**
-- Uses `description`, `when_to_use` format
-- Has extensive implementation details
-- Has examples but not in Q&A format
-
-**Migration Notes:**
-- Complex skill with Python scripts
-- Preserve all implementation details
-- Convert examples to Q&A format
-- Add tags for: document, parse, chunk, RAG, large, token, structure, metadata
-
-### uv-python
-
-**Location:** `dotcodex/skills/uv-python/SKILL.md`
-
-**Current State:**
-- Uses `description`, `when_to_use` format
-- Good examples but not in Q&A format
-
-**Migration Notes:**
-- Straightforward migration
-- Add tags for: uv, python, pip, pytest, jupyter, dependency, virtual environment
-- Convert "Real-World Examples" to Q&A format
-
-### uv-env-management
-
-**Location:** `dotcodex/skills/uv-env-management/SKILL.md`
-
-**Current State:**
-- Uses `description`, `when_to_use` format
-- Workspace-specific documentation
-- Limited examples section
-
-**Migration Notes:**
-- Add Q&A examples for common workflows
-- Add tags for: workspace, project, template, agent, RAG, notebook, API
-- Consider risk_level for directory operations
-
----
-
 ## Completion Criteria
 
 All skills are considered migrated when:
-1. All skills in `dotcodex/skills/` use the new schema
-2. All skills have `## Examples` with minimum 2 Q&A pairs
-3. All skills pass the validation checklist
-4. `SKILL-SCHEMA.md` accurately reflects current implementation
+1. All skills in `dotcodex/skills/` use the new schema ✅
+2. All skills have `## Examples` with minimum 2 Q&A pairs ✅
+3. All skills pass the validation checklist ✅
+4. `SKILL-SCHEMA.md` accurately reflects current implementation ✅
+
+**Migration completed:** 2025-11-25
 
 ---
 

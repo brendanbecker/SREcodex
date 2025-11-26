@@ -1,14 +1,14 @@
 ---
-name: UV Python Workflow
-description: Use UV package manager for all Python operations. When running Python scripts, use 'uv run python' instead of 'python'. When installing packages, use 'uv add'. When running tests, use 'uv run pytest'. When starting Jupyter, use 'uv run jupyter'. Apply to any Python project in any location. Handles dependency management, script execution, and tool running with UV.
-when_to_use: When working with Python code, running Python scripts, installing packages, executing tests, or managing Python dependencies in any project location. Use for any Python-related task where you would normally use python, pip, pytest, or other Python tools.
-version: 1.0.0
-languages: python, bash
+name: "UV Python Workflow"
+tags: ["uv", "python", "pip", "pytest", "jupyter", "dependency", "virtualenv", "package", "run"]
+intent: "Use UV package manager for all Python operations. When running Python scripts, use 'uv run python' instead of 'python'. When installing packages, use 'uv add'. When running tests, use 'uv run pytest'. When starting Jupyter, use 'uv run jupyter'. Triggers on working with Python code, running Python scripts, installing packages, executing tests, or managing Python dependencies in any project location. Use for any Python-related task where you would normally use python, pip, pytest, or other Python tools."
+version: "1.0.0"
+languages: ["python", "bash"]
 ---
 
 # UV Python Workflow
 
-## Overview
+## Usage
 
 This skill teaches you to use UV commands instead of traditional Python commands for all Python operations. UV is a fast, modern Python package manager written in Rust that's 10-100x faster than pip and provides better dependency resolution.
 
@@ -367,59 +367,31 @@ uv tree                          # Show dependencies
 uv pip list                      # List packages
 ```
 
-## Real-World Examples
+## Examples
 
-**Example 1: Running a Python script**
-```
 User: "Run my data_processor.py script"
-You: [Execute: uv run python data_processor.py]
-```
+Agent: Execute `uv run python data_processor.py` to run the script using the project's UV-managed environment.
 
-**Example 2: Installing packages**
-```
 User: "I need pandas and numpy for my analysis"
-You: [Execute: uv add pandas numpy]
-You: "I've added pandas and numpy to your project dependencies."
-```
+Agent: Run `uv add pandas numpy` to add both packages as project dependencies. UV will update pyproject.toml and install the packages to the local .venv.
 
-**Example 3: Running tests**
-```
 User: "Run the test suite"
-You: [Execute: uv run pytest]
-```
+Agent: Execute `uv run pytest` to run tests using the UV-managed environment. Add flags as needed: `uv run pytest -v --cov` for verbose output with coverage.
 
-**Example 4: Starting Jupyter**
-```
 User: "Open Jupyter Lab"
-You: [Check if jupyter is in dependencies]
-You: [Execute: uv add --dev jupyter] (if not present)
-You: [Execute: uv run jupyter lab]
-```
+Agent: First check if jupyter is in dependencies. If not, run `uv add --dev jupyter` to add it as a dev dependency. Then execute `uv run jupyter lab` to start Jupyter.
 
-**Example 5: Working with existing project**
-```
 User: "I have a project with a requirements.txt, set it up with UV"
-You: [Navigate to project directory]
-You: [Execute: uv init] (if no pyproject.toml)
-You: [Execute: cat requirements.txt | xargs -I {} uv add {}]
-You: "Project initialized with UV. All dependencies from requirements.txt have been added."
-```
+Agent: Navigate to the project directory. Run `uv init` if no pyproject.toml exists. Then migrate dependencies with `cat requirements.txt | xargs -I {} uv add {}`. The project is now UV-managed with all dependencies tracked in pyproject.toml.
 
 ## Integration with Codex Workflows
 
 This skill integrates seamlessly with other Codex skills:
 
-- **uv-env-management**: For workspace-based development at ~/python-envs/
 - **time-awareness**: For time-based scheduling and deadlines
 - **document-parser**: For processing Python documentation
 
-**Key Distinction:**
-- **uv-python** (this skill): Universal UV workflow for any Python project anywhere
-- **uv-env-management**: Workspace-specific system at ~/python-envs/ with templates
-
-Use both skills together:
-- **uv-python** for general UV command usage
-- **uv-env-management** for creating new projects in the workspace
+**Key Principle:** This skill provides universal UV workflow for any Python project in any location.
 
 ## Verification Checklist
 

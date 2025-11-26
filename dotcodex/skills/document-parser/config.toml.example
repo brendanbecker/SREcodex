@@ -1,0 +1,64 @@
+# Sample ~/.codex/config.toml configuration for document-parser skill
+#
+# This file shows how to configure Claude Code's sandbox to allow
+# execution of Python scripts from the document-parser skill.
+#
+# Usage:
+#   1. Copy relevant sections to your ~/.codex/config.toml
+#   2. Adjust paths based on your DOTCODEX_DIR configuration
+#   3. Restart Claude Code for changes to take effect
+
+# Basic configuration
+model = "gpt-5.1-codex"
+
+[notice]
+hide_gpt5_1_migration_prompt = true
+
+# Sandbox configuration for skill scripts
+[sandbox]
+# Enable read-only mode with script execution allowlist
+mode = "read-only"
+
+# Allow execution of scripts from skills directory
+# Option 1: Allow all skill scripts (recommended)
+allowed_paths = [
+    "~/.codex/skills/*/scripts",           # All skill scripts
+    "~/.local/bin",                         # User binaries
+    "/usr/bin/python3",                     # Python interpreter
+    "/usr/local/bin/python3"                # Alternative Python location
+]
+
+# Option 2: Allow only specific skill scripts (more restrictive)
+# allowed_paths = [
+#     "~/.codex/skills/document-parser/scripts",
+#     "~/.codex/skills/time-awareness/scripts",
+#     "~/.local/bin"
+# ]
+
+# Option 3: Using DOTCODEX_DIR environment variable
+# If you have DOTCODEX_DIR set in ~/.codex/config.env
+# allowed_paths = [
+#     "${DOTCODEX_DIR}/skills/*/scripts",
+#     "~/.local/bin"
+# ]
+
+# Optional: Allow specific commands
+# allowed_commands = [
+#     "python3",
+#     "python",
+#     "date",          # For time-awareness skill
+#     "jq"             # For JSON processing
+# ]
+
+# Security Notes:
+# - allowed_paths accepts glob patterns like */scripts
+# - Paths are resolved relative to user home directory (~/)
+# - Use absolute paths for system binaries (/usr/bin/python3)
+# - Environment variables like ${DOTCODEX_DIR} are supported
+# - Restart Claude Code after modifying this file
+
+# Verification:
+# After updating config, test with:
+#   cd ~/.codex/skills/document-parser
+#   python3 scripts/parse_document_structure.py --help
+#   python3 scripts/extract_metadata.py --help

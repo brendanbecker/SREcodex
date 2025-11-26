@@ -1,5 +1,5 @@
 ---
-name: Skill Builder
+name: "Skill Builder"
 tags: ["skill", "create", "template", "workflow", "pattern", "reusable", "document", "technique", "instructions", "metadata"]
 intent: "Guide for creating new skills following best practices. Use when user asks to 'create a skill', 'make a skill', 'document a technique', 'capture a workflow', or 'add instructions for future sessions'. Also triggers when you discover a reusable pattern worth standardizing, when user says 'write this down for next time', or when a process keeps recurring and should be formalized."
 version: "1.0.0"
@@ -157,17 +157,19 @@ Avoid:
 
 ### Step 3: Write Discovery Metadata
 
-This is THE MOST IMPORTANT part. Write `when_to_use` with:
+This is THE MOST IMPORTANT part. Write `tags` and `intent` carefully:
 
-**Include specific triggers:**
+**For `tags` - include keywords for discovery:**
+- Tool names: "git", "pytest", "docker"
+- Actions: "debug", "test", "deploy"
+- Concepts: "async", "parallel", "concurrent"
+- Minimum 3 tags, aim for 5-10
+
+**For `intent` - be specific about triggers:**
 - Error messages: "ENOENT", "Cannot find module"
 - Symptoms: "flaky tests", "race conditions"
-- Keywords: "async", "parallel", "concurrent"
 - User phrases: "how do I...", "keep getting..."
-
-**Include context:**
 - When in the workflow: "before writing code", "when debugging"
-- Project types: "React projects", "CLI tools"
 - Situations: "when tests are slow", "when merging is difficult"
 
 ### Step 4: Write Clear Instructions
@@ -313,13 +315,13 @@ codex-skills use your-skill-name
 
 ## Common Mistakes When Creating Skills
 
-### ❌ Vague when_to_use
+### ❌ Vague intent
 ```yaml
-when_to_use: For testing
+intent: "For testing"
 ```
 ✅ **Better:**
 ```yaml
-when_to_use: When writing unit tests, when tests are flaky, when you see "test timeout" errors, when mocking external dependencies
+intent: "Best practices for writing and debugging tests. Use when writing unit tests, when tests are flaky, when you see 'test timeout' errors, or when mocking external dependencies."
 ```
 
 ### ❌ No concrete examples
@@ -360,10 +362,10 @@ When files are locked, you'll see EBUSY errors. Use graceful-fs to retry automat
 When creating a new skill, verify:
 
 **Discovery:**
-- [ ] `when_to_use` includes specific trigger words
-- [ ] `when_to_use` includes error messages if applicable
-- [ ] `when_to_use` includes symptoms/situations
-- [ ] Description is clear and specific
+- [ ] `tags` array has 3+ keywords for search
+- [ ] `intent` includes specific trigger words
+- [ ] `intent` includes error messages if applicable
+- [ ] `intent` includes symptoms/situations
 - [ ] Name is descriptive and searchable
 
 **Content:**
@@ -413,24 +415,37 @@ mkdir -p "${skills_dir}/env-var-handling"
 **You create:**
 ```markdown
 ---
-name: Environment Variable Handling
-description: Best practices for managing environment variables securely in applications
-when_to_use: When setting up new projects, when you see hardcoded secrets, when configuring deployments, when user mentions "env vars" or ".env files", when debugging configuration issues
-version: 1.0.0
+name: "Environment Variable Handling"
+tags: ["env", "environment", "config", "secrets", "dotenv", ".env", "configuration", "variables"]
+intent: "Best practices for managing environment variables securely in applications. Use when setting up new projects, when you see hardcoded secrets, when configuring deployments, when user mentions 'env vars' or '.env files', or when debugging configuration issues."
+version: "1.0.0"
 languages: all
 ---
 
 # Environment Variable Handling
 
-## Overview
+## Usage
+
 Proper environment variable management keeps secrets out of code, enables configuration across environments, and prevents security vulnerabilities.
 
-## When to Use
+**Use this skill when:**
 - Starting a new project that needs configuration
 - See hardcoded API keys or secrets in code
 - Deploying to different environments (dev/staging/prod)
 - User mentions environment variables or configuration
 - Debugging "works on my machine" issues
+
+**Don't use when:**
+- Configuration is truly static and non-sensitive
+- Using a dedicated secrets manager (Vault, AWS Secrets Manager)
+
+## Examples
+
+User: "I have API keys hardcoded in my code, how do I fix this?"
+Agent: Move secrets to environment variables. Create a `.env` file with `API_KEY=your-key`, add `.env` to `.gitignore`, then load with `dotenv` and access via `os.environ.get('API_KEY')`.
+
+User: "My app works locally but fails in production with missing config"
+Agent: Check that all required environment variables are set in the production environment. Create a `.env.example` template listing required vars, and add startup validation to fail fast with clear error messages.
 
 ## Core Pattern
 
@@ -516,9 +531,9 @@ if not api_key:
 - Use UPPER_SNAKE_CASE consistently
 - Not `apiKey` or `api-key`
 
-## Examples
+## Implementation Examples
 
-**Example 1: Python Flask app**
+**Python Flask app:**
 ```python
 from flask import Flask
 import os
@@ -531,7 +546,7 @@ if not app.config['SECRET_KEY']:
     raise ValueError("SECRET_KEY must be set")
 ```
 
-**Example 2: Node.js Express app**
+**Node.js Express app:**
 ```javascript
 require('dotenv').config()
 
