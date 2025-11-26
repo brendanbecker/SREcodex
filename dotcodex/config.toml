@@ -17,3 +17,10 @@ temp_dir = "~/.codex/scratch"  # Directory for ephemeral orchestration scripts
 [sandbox]
 # Allow execution of skill scripts
 allowed_paths = ["~/.codex/skills/*/scripts"]
+
+# MCP Server Configuration
+# Provides semantic skill discovery via vector search
+[mcp]
+servers = [
+    { name = "srecodex-skills", command = "python", args = ["mcp-server/mcp_server.py"] }
+]

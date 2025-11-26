@@ -1,5 +1,20 @@
 # Update Log
 
+## 2025-11-26: FEAT-003 Completed
+
+- **FEAT-003: MCP & Vector Search Backend** resolved
+- Created `mcp-server/` directory with complete semantic search infrastructure
+- Built `index_skills.py` ingestion pipeline that parses YAML frontmatter from SKILL.md files
+- Implemented parent-child indexing pattern: embed intent field, store full documents
+- Created `mcp_server.py` exposing `search_skills()` tool via MCP protocol
+- Updated `dotcodex/config.toml` with MCP server configuration
+- Updated Librarian skill to use MCP tool as primary search method
+- ChromaDB uses embedded Python client with local ./chroma_data directory
+- 6 skills indexed successfully
+- Semantic search tested: Document Parser (0.80 relevance), UV Python (0.65 relevance)
+- Full content retrieval confirmed (10,507 chars including frontmatter)
+- Feature moved to completed/FEAT-003-mcp-vector-backend/
+
 ## 2025-11-25
 
 - Initialized feature-management structure

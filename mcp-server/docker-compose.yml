@@ -1,0 +1,35 @@
+# SREcodex MCP Server - Docker Compose Configuration
+# Optional: Use this for ChromaDB in Docker (alternative to embedded Python)
+#
+# Usage:
+#   docker-compose up -d          # Start ChromaDB container
+#   docker-compose down           # Stop and remove container
+#   docker-compose logs -f        # View logs
+#
+# For simpler local development, use embedded Python ChromaDB instead:
+#   python index_skills.py        # Uses local ./chroma_data directory
+
+version: '3.8'
+
+services:
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: srecodex-chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - ANONYMIZED_TELEMETRY=false
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
+    driver: local

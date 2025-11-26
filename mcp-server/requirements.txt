@@ -1,0 +1,15 @@
+# SREcodex MCP Server Dependencies
+# Install with: pip install -r requirements.txt
+# Or with uv: uv add -r requirements.txt
+
+# Vector database
+chromadb>=0.4.0
+
+# MCP protocol
+mcp>=0.1.0
+
+# YAML parsing for skill frontmatter
+pyyaml>=6.0
+
+# Async support for MCP server
+anyio>=4.0.0

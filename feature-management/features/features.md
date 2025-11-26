@@ -4,7 +4,7 @@
 |----|-------|----------|--------|-----------|
 | FEAT-001 | Skill Standardization Schema | P1 | resolved | dotcodex/skills |
 | FEAT-002 | Librarian Dynamic Discovery Skill | P1 | resolved | dotcodex/skills/core |
-| FEAT-003 | MCP & Vector Search Backend | P2 | new | mcp-server |
+| FEAT-003 | MCP & Vector Search Backend | P2 | resolved | mcp-server |
 | FEAT-004 | Script-First Programmatic Orchestration | P2 | resolved | dotcodex/config |
 | FEAT-005 | OVERPROMPT Workflow Implementation | P1 | new | feature-management |
 
