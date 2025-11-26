@@ -11,6 +11,5 @@ dependencies = [
     "pyyaml>=6.0.3",
 ]
 
-[project.scripts]
-mcp-serve = "mcp_server:main"
-mcp-index = "index_skills:main"
+# Run via: uv run python mcp_server.py
+# Or use: make serve

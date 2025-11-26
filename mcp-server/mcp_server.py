@@ -214,8 +214,17 @@ class SkillSearchServer:
             print("ERROR: Server not initialized", file=sys.stderr)
             sys.exit(1)
 
+        from mcp.server import InitializationOptions
+        from mcp.types import ServerCapabilities
+
+        init_options = InitializationOptions(
+            server_name="srecodex-skills",
+            server_version="0.1.0",
+            capabilities=ServerCapabilities(tools={})
+        )
+
         async with stdio_server() as (read_stream, write_stream):
-            await self.server.run(read_stream, write_stream)
+            await self.server.run(read_stream, write_stream, init_options)
 
 
 def main():
