@@ -2,7 +2,10 @@
 
 Repository for building and distributing Codex Skill bundles. It now follows a tidy layout:
 
-- [`docs/`](docs) – AGENTS contract, analysis, implementation guide, and onboarding instructions
+- [`docs/`](docs) – Documentation including:
+  - [`START-HERE.md`](docs/START-HERE.md) – Quick-start onboarding guide
+  - [`WHAT-ARE-SKILLS.md`](docs/WHAT-ARE-SKILLS.md) – Conceptual Guide: Understanding Skills & Progressive Disclosure
+  - [`AGENTS-GUIDE.md`](docs/AGENTS-GUIDE.md) – AGENTS contract and implementation guide
 - [`scripts/`](scripts) – executable tooling (`codex-skills`, `install-skills.sh`)
 - [`skills/`](skills) – each skill in its own folder with `SKILL.md`
 

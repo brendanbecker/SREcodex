@@ -191,6 +191,7 @@ make reset-runtime   # Clean and re-copy all skills
 4. Build library of essential skills
 
 ### Resources
+- **Conceptual guide:** [`WHAT-ARE-SKILLS.md`](WHAT-ARE-SKILLS.md) – Understanding Skills & Progressive Disclosure
 - **Skill creation guide:** `codex-skills use skill-builder`
 - **Repository standards:** `codexskills/docs/AGENTS-GUIDE.md`
 - **Original project:** [Superpowers by Jesse Vincent](https://github.com/obra/superpowers)
