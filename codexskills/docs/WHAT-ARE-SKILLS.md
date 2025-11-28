@@ -14,29 +14,26 @@ We do not force the Agent to memorize every SOP on day one. We give them an inde
 
 We use **Progressive Disclosure** to prevent blowing up the Agent's context window (memory). The Agent only loads the heavy text of a skill *after* it realizes it needs it.
 
-\+--------+           \+---------------+            \+------------------+  
-|  User  |           | Agent (Codex) |            |  Skill Registry  |  
-\+--------+           \+---------------+            \+------------------+  
-    |                        |                             |  
-    |--(1) "API is 500ing"--\>|                             |  
-    |                        |                             |  
-    |            \[Scans Skill Descriptions\]                |  
-    |            \[Match: "api\_triage.md" \]                 |  
-    |                        |                             |  
-    |                        |---(2) Request Content------\>|  
-    |                        |                             |  
-    |                        |\<--(3) Load "api\_triage"-----|  
-    |                        |                             |  
-    |             \[ Now Following SOP \]                    |  
-    |             \[ 1\. Check Load Balancer \]               |  
-    |             \[ 2\. Check Pod Logs      \]               |  
-    |                        |                             |  
-    |\<--(4) "I found the logs..."--------------------------|  
-    |                        |                             |
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent as Agent (Codex)
+    participant Registry as Skill Registry
+
+    User->>Agent: (1) "API is 500ing"
+    Note over Agent: Scans Skill Descriptions
+    Note over Agent: Match: "api_triage.md"
+    Agent->>Registry: (2) Request Content
+    Registry-->>Agent: (3) Load "api_triage"
+    Note over Agent: Now Following SOP
+    Note over Agent: 1. Check Load Balancer
+    Note over Agent: 2. Check Pod Logs
+    Agent->>User: (4) "I found the logs..."
+```
 
 ## **FAQ**
 
-### **1\. Is a Skill code or text?**
+### **1. Is a Skill code or text?**
 
 It is primarily text.  
 A Skill is a Markdown file (instructions) that tells the agent how to use Code (tools).
@@ -44,7 +41,7 @@ A Skill is a Markdown file (instructions) that tells the agent how to use Code (
 * **Tool:** A Python function that runs aws ec2 reboot-instances.  
 * **Skill:** A Markdown guide that says: *"If the health check fails 3 times, use the reboot tool, then wait 60 seconds."*
 
-### **2\. Why don't we just put this in the System Prompt?**
+### **2. Why don't we just put this in the System Prompt?**
 
 Scalability.  
 If we put every SRE procedure into the main prompt, we would:
@@ -55,10 +52,10 @@ If we put every SRE procedure into the main prompt, we would:
 
 By using Skills, we can have 1,000 different SOPs in the repo, but the agent only "pays" the cognitive cost for the one it is currently using.
 
-### **3\. Where do they live?**
+### **3. Where do they live?**
 
-* **Source:** codexskills/skills/\*/SKILL.md (Edit these)  
-* **Runtime:** dotcodex/skills/ (The agent reads these)
+* **Source:** `codexskills/skills/*/SKILL.md` (Edit these)  
+* **Runtime:** `dotcodex/skills/` (The agent reads these)
 
 ## **Anatomy of a Skill**
 
@@ -69,16 +66,5 @@ A typical SKILL.md looks like this:
 **Instructions:**
 
 1. Check kubectl top pods.  
-2. If CPU \> 90%, check HPA status.  
+2. If CPU > 90%, check HPA status.  
 3. If HPA is maxed, escalate to On-Call Primary.
-
-\<\!--  
-For Web Viewers (GitHub/GitLab), here is the Mermaid version:  
-sequenceDiagram  
-    participant User  
-    participant Agent  
-    participant Registry  
-    User-\>\>Agent: (1) "API is 500ing"  
-    Note over Agent: Scans Index \-\> Match found  
-    Agent-\>\>Registry: (2) Request Content  
-    Registry--\>\>Agent: (3) Load  
