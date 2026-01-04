@@ -1,5 +1,6 @@
 ---
 name: "Document Parser"
+description: "Parse large documents into structured sections with abstracts and metadata"
 tags: ["document", "parse", "chunk", "RAG", "large", "token", "structure", "metadata", "markdown", "hierarchy", "context-limit"]
 intent: "Parse large documents that exceed context limits into structured sections with abstracts, metadata, and hierarchies. Use when encountering documents over 25k tokens, when user mentions 'parse document', 'too large to read', 'context limit exceeded', when analyzing research papers or technical documentation, when extracting structure from markdown files, when building RAG systems that need chunked content, or when user requests 'extract metadata' or 'build document hierarchy'."
 version: "1.0.0"

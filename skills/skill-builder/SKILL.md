@@ -1,5 +1,6 @@
 ---
 name: "Skill Builder"
+description: "Guide for creating new skills following best practices"
 tags: ["skill", "create", "template", "workflow", "pattern", "reusable", "document", "technique", "instructions", "metadata"]
 intent: "Guide for creating new skills following best practices. Use when user asks to create a new skill, document a technique, capture a workflow, or add instructions for future sessions. Triggers when you discover a pattern worth reusing, when user says 'make a skill', 'write this down', or wants to standardize a recurring process."
 version: "1.0.0"
@@ -43,11 +44,12 @@ Every skill must have this structure:
 
 ```markdown
 ---
-name: Human-Readable Skill Name
-description: One-line summary of what this does
-when_to_use: Detailed triggers, symptoms, and situations when this applies
-version: 1.0.0
-languages: all | [python, javascript] | specific language
+name: "Human-Readable Skill Name"
+description: "One-line summary of what this does"
+tags: ["keyword1", "keyword2", "keyword3"]
+intent: "Detailed triggers, symptoms, and situations when this applies. Include error messages, user phrases, and specific scenarios."
+version: "1.0.0"
+languages: all | ["python", "javascript"] | specific language
 ---
 
 # Skill Name
@@ -89,17 +91,24 @@ Real-world concrete examples of using this skill.
 
 The YAML section at the top is **critical for discovery**. Codex finds skills by matching patterns in these fields.
 
-### Required Fields
+### Required Fields (Codex will fail to load skills missing these)
 
-**`name:`** - Human-readable title
+**`name:`** - Human-readable title (REQUIRED)
 - Use active voice: "Creating Skills" not "Skill Creation"
 - Descriptive: "Time Awareness" not just "Time"
+- Use quotes for strings with special characters
 
-**`description:`** - One-line summary
+**`description:`** - One-line summary (REQUIRED by Codex)
 - What does it do in plain language?
 - This shows in skill listings
+- **Codex will skip loading skills without this field**
 
-**`when_to_use:`** - Discovery metadata (MOST IMPORTANT)
+**`tags:`** - Discovery keywords (recommended)
+- Array of keywords for matching user queries
+- Include synonyms and related terms
+- Example: `["git", "worktree", "branch", "parallel"]`
+
+**`intent:`** - Discovery metadata (MOST IMPORTANT for matching)
 - Be extremely specific
 - Include error messages, symptoms, trigger words
 - This is how Codex knows to load your skill
@@ -109,19 +118,19 @@ The YAML section at the top is **critical for discovery**. Codex finds skills by
 
 **`languages:`** - Which languages/contexts apply
 - `all` for universal skills
-- `[python, javascript]` for language-specific
-- `[typescript]` for single language
+- `["python", "javascript"]` for language-specific
+- `["typescript"]` for single language
 
-### Example of Good vs Bad when_to_use
+### Example of Good vs Bad intent
 
 ❌ **Bad - Too vague:**
 ```yaml
-when_to_use: For git workflows
+intent: "For git workflows"
 ```
 
 ✅ **Good - Specific triggers:**
 ```yaml
-when_to_use: When working on multiple features simultaneously, when you need to preserve work-in-progress, when switching contexts frequently, when you see "detached HEAD" state, or when user mentions "git worktrees"
+intent: "When working on multiple features simultaneously, when you need to preserve work-in-progress, when switching contexts frequently, when you see 'detached HEAD' state, or when user mentions 'git worktrees'"
 ```
 
 ## Step-by-Step Skill Creation Process
@@ -148,7 +157,7 @@ Avoid:
 
 ### Step 3: Write Discovery Metadata
 
-This is THE MOST IMPORTANT part. Write `when_to_use` with:
+This is THE MOST IMPORTANT part. Write `intent` with:
 
 **Include specific triggers:**
 - Error messages: "ENOENT", "Cannot find module"
@@ -304,13 +313,13 @@ codex-skills use your-skill-name
 
 ## Common Mistakes When Creating Skills
 
-### ❌ Vague when_to_use
+### ❌ Vague intent
 ```yaml
-when_to_use: For testing
+intent: "For testing"
 ```
 ✅ **Better:**
 ```yaml
-when_to_use: When writing unit tests, when tests are flaky, when you see "test timeout" errors, when mocking external dependencies
+intent: "When writing unit tests, when tests are flaky, when you see 'test timeout' errors, when mocking external dependencies"
 ```
 
 ### ❌ No concrete examples
@@ -351,10 +360,11 @@ When files are locked, you'll see EBUSY errors. Use graceful-fs to retry automat
 When creating a new skill, verify:
 
 **Discovery:**
-- [ ] `when_to_use` includes specific trigger words
-- [ ] `when_to_use` includes error messages if applicable
-- [ ] `when_to_use` includes symptoms/situations
-- [ ] Description is clear and specific
+- [ ] `description` field is present (REQUIRED by Codex)
+- [ ] `intent` includes specific trigger words
+- [ ] `intent` includes error messages if applicable
+- [ ] `intent` includes symptoms/situations
+- [ ] `tags` include relevant keywords
 - [ ] Name is descriptive and searchable
 
 **Content:**
@@ -404,10 +414,11 @@ mkdir -p "${skills_dir}/env-var-handling"
 **You create:**
 ```markdown
 ---
-name: Environment Variable Handling
-description: Best practices for managing environment variables securely in applications
-when_to_use: When setting up new projects, when you see hardcoded secrets, when configuring deployments, when user mentions "env vars" or ".env files", when debugging configuration issues
-version: 1.0.0
+name: "Environment Variable Handling"
+description: "Best practices for managing environment variables securely in applications"
+tags: ["env", "environment", "secrets", "config", "dotenv", ".env", "configuration"]
+intent: "When setting up new projects, when you see hardcoded secrets, when configuring deployments, when user mentions 'env vars' or '.env files', when debugging configuration issues"
+version: "1.0.0"
 languages: all
 ---
 

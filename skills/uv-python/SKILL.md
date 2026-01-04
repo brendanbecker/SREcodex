@@ -1,5 +1,6 @@
 ---
 name: "UV Python Workflow"
+description: "Use UV package manager for all Python operations instead of pip/python"
 tags: ["uv", "python", "pip", "pytest", "jupyter", "dependency", "virtualenv", "package", "run"]
 intent: "Use UV package manager for all Python operations. When running Python scripts, use 'uv run python' instead of 'python'. When installing packages, use 'uv add'. When running tests, use 'uv run pytest'. When starting Jupyter, use 'uv run jupyter'. Triggers on working with Python code, running Python scripts, installing packages, executing tests, or managing Python dependencies in any project location. Use for any Python-related task where you would normally use python, pip, pytest, or other Python tools."
 version: "1.0.0"
