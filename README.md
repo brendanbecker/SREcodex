@@ -1,54 +1,59 @@
-# SREcodex – Skills for Codex
+# SREcodex
 
-This repository packages everything you need to run the Skills system locally and share it with teammates. It contains two sibling directories:
-
-- [`codexskills/`](codexskills) – editable source (docs, scripts, skills, Makefile)
-- [`dotcodex/`](dotcodex) – runtime layout Codex reads after running the installer
+SRE skills for OpenAI Codex.
 
 ## Quick Start
 
 ```bash
 git clone git@github.com:brendanbecker/SREcodex.git
-cd SREcodex/codexskills
-export DOTCODEX_DIR=../dotcodex   # or any absolute path you prefer
-make deploy                       # or bash scripts/install-skills.sh
-make verify                       # runs codex-skills list against DOTCODEX_DIR
+cd SREcodex
+./scripts/uninstall-bridge.sh
 ```
 
-The installer copies `AGENTS.md` and all `skills/*/SKILL.md` files into `DOTCODEX_DIR` and refreshes the `~/.codex/AGENTS.md` and `~/.codex/skills` symlinks so Codex immediately sees the new instructions.
+The script will:
+1. Remove any old bridge symlinks from `~/.codex/`
+2. Install skills to `~/.codex/skills/`
+3. Prompt you to clean up any MCP server config
 
-## Repository Layout
+Restart Codex after running the script.
 
-| Path | Purpose |
-|------|---------|
-| [`codexskills/AGENTS-TEMPLATE.md`](codexskills/AGENTS-TEMPLATE.md) | Template copied to `dotcodex/AGENTS.md` for Codex to read |
-| [`codexskills/docs/AGENTS-GUIDE.md`](codexskills/docs/AGENTS-GUIDE.md) | Repository guidelines and review checklist |
-| [`codexskills/docs/START-HERE.md`](codexskills/docs/START-HERE.md) | Onboarding playbook (full walkthrough) |
-| [`codexskills/README.md`](codexskills/README.md) | Developer-facing README inside the source tree |
-| [`codexskills/scripts/`](codexskills/scripts) | `codex-skills` CLI + `install-skills.sh` installer |
-| [`codexskills/skills/`](codexskills/skills) | Each skill lives in its own folder with `SKILL.md` |
-| [`dotcodex/`](dotcodex) | Generated runtime files that Codex reads |
+## Skills Included
 
-## Makefile Shortcuts
+| Skill | Description |
+|-------|-------------|
+| `document-parser` | Parse large documents exceeding context limits |
+| `skill-builder` | Create new skills |
+| `time-awareness` | Current date/time information |
+| `uv-python` | UV package manager workflow for Python |
 
-From the `codexskills/` directory you can run:
+## Manual Installation
+
+If you prefer not to run the script, copy skills manually:
 
 ```bash
-make deploy        # DOTCODEX_DIR=../dotcodex bash scripts/install-skills.sh
-make verify        # DOTCODEX_DIR=../dotcodex codex-skills list
-make lint          # shellcheck scripts/codex-skills and scripts/install-skills.sh
-make clean-runtime # remove installed skills from DOTCODEX_DIR
+cp -r skills/* ~/.codex/skills/
 ```
 
-Override `DOTCODEX_DIR=/absolute/path` if you want to target a different runtime directory.
+## Adding Skills
 
-## Creating or Updating Skills
+1. Create a new directory under `skills/`
+2. Add a `SKILL.md` file with YAML frontmatter:
 
-1. Edit/create folders under [`codexskills/skills`](codexskills/skills) (each with `SKILL.md`).
-2. Update docs as needed (e.g., [`docs/START-HERE.md`](codexskills/docs/START-HERE.md)).
-3. Run `make deploy` to copy the new skills into `dotcodex/`.
-4. Run `codex-skills list` (or `make verify`) to confirm activation.
+```markdown
+---
+name: "My Skill"
+tags: ["keyword1", "keyword2"]
+intent: "Use this when..."
+version: "1.0.0"
+---
 
-## Attribution & License
+# My Skill
 
-This implementation is based on the Skills architecture from [Jesse Vincent's Superpowers project](https://github.com/obra/superpowers) and his blog post about [porting Skills to Codex](https://blog.fsck.com/2025/10/27/skills-for-openai-codex/). See [`codexskills/CREDITS.md`](codexskills/CREDITS.md) and [`codexskills/LICENSE.md`](codexskills/LICENSE.md) for attribution and licensing.
+Instructions here...
+```
+
+3. Run the install script or copy manually
+
+## License
+
+MIT
